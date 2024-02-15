@@ -1,0 +1,4 @@
+C:/Users/Usuario/CLionProjects/PRO2-2324/P0/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/Usuario/CLionProjects/PRO2-2324/P0/cmake-build-debug/CMakeFiles/Rational_pointer.dir
+C:/Users/Usuario/CLionProjects/PRO2-2324/P0/cmake-build-debug/CMakeFiles/Rational_struct.dir
+C:/Users/Usuario/CLionProjects/PRO2-2324/P0/cmake-build-debug/CMakeFiles/edit_cache.dir
