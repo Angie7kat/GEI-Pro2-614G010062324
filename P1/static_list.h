@@ -22,47 +22,91 @@ typedef struct{
 
 void createEmptyList (tList);
 /*
- *
+ * Objetivo:
+ * Entradas:
+ * Salidas:
+ * PreCD:
+ * PostCD:
  */
 bool isEmptyList (tList);
 /*
- *
+ * Objetivo:
+ * Entradas:
+ * Salidas:
+ * PreCD:
+ * PostCD:
  */
 tPosL first (tList);
 /*
- *
+ * Objetivo:
+ * Entradas:
+ * Salidas:
+ * PreCD:
+ * PostCD:
  */
 tPosL last (tList);
 /*
- *
+ * Objetivo:
+ * Entradas:
+ * Salidas:
+ * PreCD:
+ * PostCD:
  */
 tPosL next (tPosL, tList);
 /*
- *
+ * Objetivo:
+ * Entradas:
+ * Salidas:
+ * PreCD:
+ * PostCD:
  */
 tPosL previous (tPosL, tList);
 /*
- *
+ * Objetivo:
+ * Entradas:
+ * Salidas:
+ * PreCD:
+ * PostCD:
  */
 bool insertItem (tItemL, tPosL, tList);
 /*
- *
+ * Objetivo:
+ * Entradas:
+ * Salidas:
+ * PreCD:
+ * PostCD:
  */
 void deleteAtPosition (tPosL, tList);
 /*
- *
+ * Objetivo:
+ * Entradas:
+ * Salidas:
+ * PreCD:
+ * PostCD:
  */
 tItemL getItem (tPosL, tList);
 /*
- *
+ * Objetivo:
+ * Entradas:
+ * Salidas:
+ * PreCD:
+ * PostCD:
  */
 void updateItem (tItemL, tPosL, tList);
 /*
- *
+ * Objetivo:
+ * Entradas:
+ * Salidas:
+ * PreCD:
+ * PostCD:
  */
 tPosL findItem (tUserName d, tList L);
 /*
- *
+ * Objetivo:
+ * Entradas:
+ * Salidas:
+ * PreCD:
+ * PostCD:
  */
 
 #endif

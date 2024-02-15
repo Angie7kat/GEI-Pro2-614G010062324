@@ -6,8 +6,8 @@
  * GROUP: 3.1
  * DATE: ** / ** / **
  */
-
 #include "static_list.h"
+#include <string.h>
 
 void createEmptyList(tList L){
     L.lastPos = LNULL;
@@ -38,11 +38,9 @@ tPosL previous(tPosL p, tList L){
     else
         return --p;
 }
-
-//--------------------------------------------------------------------------------------------------------------------
 bool insertItem(tItemL d, tPosL p, tList L){
     tPosL q;
-    if(L.lastPos == MAX - 1 && p > MAX)
+    if(L.lastPos == MAX - 1)
         return false;
     else{
         L.lastPos++;
@@ -56,7 +54,6 @@ bool insertItem(tItemL d, tPosL p, tList L){
         return true;
     }
 }
-
 void deleteAtPosition(tPosL p, tList L){
     tPosL q;
     for(q=p; q<L.lastPos; q++){
@@ -75,17 +72,28 @@ void updateItem(tItemL d, tPosL p, tList L){
 
 tPosL findItem(tUserName d, tList L){
     tPosL p;
-
     if(L.lastPos == LNULL){
         return LNULL;
     }else{
-        for(p=0; p<L.lastPos && (L.Item[p] != d) ;p++){
-            if(L.Item[p] == d){
+        for (p = 0; p < MAX-1; ++p) {
+            if (strcmp(d, L.Item[p].userName) == 0) {
                 return p;
-            }else{
+            } else {
                 return LNULL;
             }
         }
     }
 }
 
+
+
+/*
+ * int findItem(const char *tUserName, const ListItem tList[], int numItems) {
+    for (int i = 0; i < numItems; ++i) {
+        if (strcmp(tUserName, tList[i].username) == 0) {
+            return i;  // Devuelve la posición del elemento si se encuentra
+        }
+    }
+    return LNULL;  // Devuelve LNULL si el elemento no se encuentra
+}
+ */
