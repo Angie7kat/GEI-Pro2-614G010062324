@@ -1,9 +1,9 @@
 /*
  * TITLE: PROGRAMMING II LABS
  * SUBTITLE: Practical 1
- * AUTHOR 1: ***************************** LOGIN 1: **********
- * AUTHOR 2: ***************************** LOGIN 2: **********
- * GROUP: *.*
+ * AUTHOR 1: Ángela Fouz Suárez LOGIN 1: angela.fouz
+ * AUTHOR 2: Nolan Duteil       LOGIN 2: nolan.duteil
+ * GROUP: 3.1
  * DATE: ** / ** / **
  */
 
