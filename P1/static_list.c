@@ -71,10 +71,11 @@ void updateItem(tItemL Item, tPosL p, tList* L){
 }
 
 tPosL findItem(tUserName name, tList L){
+    tPosL p;
     if(L.lastPos == LNULL){
         return LNULL;
     }else{
-        for (tPosL p = 0; p <= L.lastPos; ++p) {
+        for (p = 0; p <= L.lastPos; ++p) {
             if (strcmp(name, L.Item[p].userName) == 0) {
                 return p;
             }
