@@ -38,18 +38,18 @@ tPosL previous(tPosL p, tList L){
     else
         return --p;
 }
-bool insertItem(tItemL d, tPosL p, tList L){
+bool insertItem(tItemL Item, tPosL p, tList L){
     tPosL q;
     if(L.lastPos == MAX - 1)
         return false;
     else{
         L.lastPos++;
         if(p == LNULL)
-            L.Item[L.lastPos] = d;
+            L.Item[L.lastPos] = Item;
         else{
             for(q = L.lastPos; q>p; q--)
                 L.Item[q] = L.Item[q-1];
-            L.Item[q] = d;
+            L.Item[q] = Item;
         }
         return true;
     }
@@ -66,17 +66,17 @@ tItemL getItem(tPosL p, tList L){
     return L.Item[p];
 }
 
-void updateItem(tItemL d, tPosL p, tList L){
-    L.Item[p] = d;
+void updateItem(tItemL Item, tPosL p, tList L){
+    L.Item[p] = Item;
 }
 
-tPosL findItem(tUserName d, tList L){
+tPosL findItem(tUserName name, tList L){
     tPosL p;
     if(L.lastPos == LNULL){
         return LNULL;
     }else{
         for (p = 0; p < MAX-1; ++p) {
-            if (strcmp(d, L.Item[p].userName) == 0) {
+            if (strcmp(name, L.Item[p].userName) == 0) {
                 return p;
             } else {
                 return LNULL;
@@ -84,16 +84,3 @@ tPosL findItem(tUserName d, tList L){
         }
     }
 }
-
-
-
-/*
- * int findItem(const char *tUserName, const ListItem tList[], int numItems) {
-    for (int i = 0; i < numItems; ++i) {
-        if (strcmp(tUserName, tList[i].username) == 0) {
-            return i;  // Devuelve la posición del elemento si se encuentra
-        }
-    }
-    return LNULL;  // Devuelve LNULL si el elemento no se encuentra
-}
- */
