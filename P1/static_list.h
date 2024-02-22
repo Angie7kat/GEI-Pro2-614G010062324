@@ -20,7 +20,7 @@ typedef struct{
     tItemL Item[MAX];
 }tList;
 
-void createEmptyList (tList L);
+void createEmptyList (tList* L);
 /*
  * Objetivo: Crear una lista vacía
  * Entradas: El nombre de la lista a crear
@@ -68,7 +68,7 @@ tPosL previous (tPosL p, tList L);
  * PreCD: La posición introducida tiene que ser válida dentro de la lista.
  * PostCD: Ninguna
  */
-bool insertItem (tItemL Item, tPosL p, tList L);
+bool insertItem (tItemL Item, tPosL p, tList* L);
 /*
  * Objetivo: Inserta un elemento en la lista antes de la posición indicada. Si la posición es LNULL, entonces se añade al final.
  * Entradas: El elemento a insertar, su posición y la lista en la que se va a introducir.
@@ -76,7 +76,7 @@ bool insertItem (tItemL Item, tPosL p, tList L);
  * PreCD: La posición indicada es una posición válida en la lista o bien nula (LNULL).
  * PostCD: Las posiciones de los elementos de la lista posteriores a la del elemento insertado pueden haber variado.
  */
-void deleteAtPosition (tPosL p, tList L);
+void deleteAtPosition (tPosL p, tList* L);
 /*
  * Objetivo: Elimina de la lista el elemento que ocupa la posición indicada.
  * Entradas: La posición donde está el elemento que se quiere eliminar y la lista en la que se encuentra.
@@ -92,7 +92,7 @@ tItemL getItem (tPosL p, tList L);
  * PreCD: La posición indicada es una posición válida en la lista.
  * PostCD: Ninguna.
  */
-void updateItem (tItemL Item, tPosL p, tList L);
+void updateItem (tItemL Item, tPosL p, tList* L);
 /*
  * Objetivo: Modificar el contenido del elemento situado en la posición dada.
  * Entradas: El contenido que se quiere modificar, la posición que va a ser actualizada y la lista en la que se encuentra.

@@ -9,8 +9,8 @@
 #include "static_list.h"
 #include <string.h>
 
-void createEmptyList(tList L){
-    L.lastPos = LNULL;
+void createEmptyList(tList* L){
+    L->lastPos = LNULL;
 }
 
 bool isEmptyList(tList L){
@@ -38,36 +38,36 @@ tPosL previous(tPosL p, tList L){
     else
         return --p;
 }
-bool insertItem(tItemL Item, tPosL p, tList L){
+bool insertItem(tItemL Item, tPosL p, tList* L){
     tPosL q;
-    if(L.lastPos == MAX - 1)
+    if(L->lastPos == MAX - 1)
         return false;
     else{
-        L.lastPos++;
+        L->lastPos++;
         if(p == LNULL)
-            L.Item[L.lastPos] = Item;
+            L->Item[L->lastPos] = Item;
         else{
-            for(q = L.lastPos; q>p; q--)
-                L.Item[q] = L.Item[q-1];
-            L.Item[q] = Item;
+            for(q = L->lastPos; q>p; q--)
+                L->Item[q] = L->Item[q-1];
+            L->Item[q] = Item;
         }
         return true;
     }
 }
-void deleteAtPosition(tPosL p, tList L){
+void deleteAtPosition(tPosL p, tList* L){
     tPosL q;
-    for(q=p; q<L.lastPos; q++){
-        L.Item[q] = L.Item[q+1];
+    for(q=p; q<L->lastPos; q++){
+        L->Item[q] = L->Item[q+1];
     }
-    L.lastPos--;
+    L->lastPos--;
 }
 
 tItemL getItem(tPosL p, tList L){
     return L.Item[p];
 }
 
-void updateItem(tItemL Item, tPosL p, tList L){
-    L.Item[p] = Item;
+void updateItem(tItemL Item, tPosL p, tList* L){
+    L->Item[p] = Item;
 }
 
 tPosL findItem(tUserName name, tList L){
