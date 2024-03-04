@@ -4,9 +4,8 @@
  * AUTHOR 1: Ángela Fouz Suárez LOGIN 1: angela.fouz
  * AUTHOR 2: Nolan Duteil       LOGIN 2: nolan.duteil
  * GROUP: 3.1
- * DATE: ** / ** / **
+ * DATE: 04 / 03 / 2024
  */
-
 #ifndef STATIC_LIST_H
 #define STATIC_LIST_H
 #define MAX 25
@@ -22,8 +21,8 @@ typedef struct{
 
 void createEmptyList (tList* L);
 /*
- * Objetivo: Crear una lista vacía
- * Entradas: El nombre de la lista a crear
+ * Objetivo: Crear una lista vacía.
+ * Entradas: El nombre de la lista a crear.
  * Salidas: Lista vacía.
  * PreCD: Ninguna.
  * PostCD: La lista queda creada, inicializada y está vacía.
@@ -50,7 +49,7 @@ tPosL last (tList L);
  * Entradas: La lista de la que se va a devolver el último elemento.
  * Salidas: La posición del último elemento de la lista.
  * PreCD: La lista no puede estar vacía.
- * PostCD: Ninguna
+ * PostCD: Ninguna.
  */
 tPosL next (tPosL p, tList L);
 /*
@@ -70,9 +69,9 @@ tPosL previous (tPosL p, tList L);
  */
 bool insertItem (tItemL Item, tPosL p, tList* L);
 /*
- * Objetivo: Inserta un elemento en la lista antes de la posición indicada. Si la posición es LNULL, entonces se añade al final.
+ * Objetivo: Inserta un elemento en la lista en la posición indicada. Si la posición es LNULL, entonces se añade al final.
  * Entradas: El elemento a insertar, su posición y la lista en la que se va a introducir.
- * Salidas: Devuelve un valor true si el elemento fue insertado y la lista modificada con el nuevo item añadido;false en caso contrario .
+ * Salidas: Devuelve un valor true si el elemento fue insertado y la lista modificada con el nuevo item añadido; false en caso contrario.
  * PreCD: La posición indicada es una posición válida en la lista o bien nula (LNULL).
  * PostCD: Las posiciones de los elementos de la lista posteriores a la del elemento insertado pueden haber variado.
  */

@@ -4,7 +4,7 @@
  * AUTHOR 1: Ángela Fouz Suárez LOGIN 1: angela.fouz
  * AUTHOR 2: Nolan Duteil       LOGIN 2: nolan.duteil
  * GROUP: 3.1
- * DATE: 02 / 03 / 2024
+ * DATE: 04 / 03 / 2024
  */
 #include "static_list.h"
 #include <string.h>
@@ -65,20 +65,22 @@ bool insertItem(tItemL Item, tPosL p, tList* L){
         /* Si la lista no esta llena, aumentamos en 1 el valor de la última posición.*/
         if(p == LNULL){
             L->Item[L->lastPos] = Item;
-            /* Creamos otro condicional para saber si el valor de la posición introducida es nulo y posteriormente
-             * insertar el Item que se guardará en la última posición de la lista.*/
+            /* Creamos otro condicional en el que si la posición introducida es null insertamos el Item en la última
+             * posición de la lista.*/
         }else{
             for(q = L->lastPos; q>p; q--){
-                /* En caso de no ser nulo la posición introducida, creamos un bucle para recorrer la lista buscando la
+                /* En caso de no ser null la posición introducida, creamos un bucle para recorrer la lista buscando la
                  * posición indicada.*/
                 L->Item[q] = L->Item[q-1];
                 /* En la última posición(que está vacía) duplicamos la información de la anterior y así hasta llegar a
                  * la posición en la que queremos insertar el Item.*/
             }
             L->Item[q] = Item;
-            /* Insertamos el Item en esa posición.*/
+            /* Insertamos el Item en esa posición y no quedará ningún elemento duplicado. La lista queda modificada con
+             * una posición más y el item insertado en la posición deseada.*/
         }
         return true;
+        /* Retornamos true si el Item ha sido insertado con éxito.*/
     }
 }
 void deleteAtPosition(tPosL p, tList* L){
@@ -119,7 +121,7 @@ tPosL findItem(tUserName name, tList L){
             if (strcmp(name, L.Item[p].userName) == 0) {
                 return p;
                 /* Finalmente creamos un condicional que busca el nombre del user asegurándose de que el contenido
-                 * de la posición del bucle sea igual al nombre dado.*/
+                 * de la posición del bucle sea igual al nombre dado y al encontrarlo devolvemos esta posición.*/
             }
         }
         return LNULL;
