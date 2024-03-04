@@ -110,9 +110,30 @@ tPosL previous(tPosL p, tList L){
 }
 
 void deleteAtPosition(tPosL p, tList * L){
+    tPosL q;
 
+    if(p == *L){
+        *L = (*L) -> next;
+    }else if(p->next == LNULL){
+        for(q = *L; q ->next != p; q = q ->next){
+            q->next = LNULL;
+        }
+    }else{
+        q = p-> next;
+        p->data = q->data;
+        p->next = q->next;
+        p = q;
+    }
+    free(p);
 }
 
 void deleteList(tList * L){
+    tPosL q;
 
+    while(*L != LNULL){ //tmb podriamos llamar a isemptylist
+        q = *L;
+        *L = (*L)->next;
+        free(q);
+
+    }
 }
