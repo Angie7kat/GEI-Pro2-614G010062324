@@ -9,6 +9,7 @@
 
 #include "dynamic_list.h"
 #include <stdlib.h>
+#include <string.h>
 
 void createEmptyList(tList* L){
     *L = LNULL;
@@ -78,10 +79,9 @@ void deleteAtPosition(tPosL p, tList * L){
 
     if(p == *L){
         *L = (*L) -> next;
-    }else if(p->next == LNULL){
-        for(q = *L; q ->next != p; q = q ->next){
-            q->next = LNULL;
-        }
+    }else if(p->next == LNULL){ //ultima pos
+        for(q = *L; q ->next != p; q = q ->next);
+        q->next = LNULL;
     }else{
         q = p-> next;
         p->data = q->data;
@@ -99,9 +99,12 @@ void updateItem(tItemL d, tPosL p, tList * L){
     p->data = d;
 }
 
-tPosL findItem(tItemL d, tList L){
+tPosL findItem(tUserName name, tList L){
     tPosL p;
 
-    for(p=L; (p != LNULL) && (p->data != d); p = p->next);
+    for(p = L; (p != LNULL) && (strcmp(p->data.userName, name) != 0); p = p->next);
+        if (p == LNULL || strcmp(p->data.userName,name) != 0){
+            return LNULL;
+        }
     return p;
 }

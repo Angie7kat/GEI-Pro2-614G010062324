@@ -14,7 +14,6 @@
 
 #include "types.h"
 
-typedef int tItemL;
 typedef struct tNode* tPosL;
 struct tNode{
     tItemL data;
@@ -102,7 +101,7 @@ void updateItem(tItemL d, tPosL p, tList * L);
  * PreCD: La posición indicada es una posición válida en la lista.
  * PostCD: El orden de los elementos de la lista no se ve modificado.
  */
-tPosL findItem(tItemL d, tList L);
+tPosL findItem(tUserName name, tList L);
 /*
  * Objetivo: Devolver la posición del primer elemento de la lista cuyo nombre de usuario se corresponda con el indicado.
  * Entradas: Nombre del usuario y la lista en la que se va a buscar.
