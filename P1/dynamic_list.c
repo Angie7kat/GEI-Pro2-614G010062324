@@ -85,7 +85,7 @@ bool insertItem(tItemL d, tPosL p, tList* L) {
             q->next = p;
             *L = q;
             /* En caso de que la posición sea la primera de la lista, le asignamos al next el nodo de la primera
-             * posición y lo colocamos en la pimera posición de la lista.*/
+             * posición y lo colocamos en la primera posición de la lista.*/
         } else {
             q->data = p->data;
             p->data = d;
@@ -109,7 +109,7 @@ void deleteAtPosition(tPosL p, tList * L){
     }else if(p->next == LNULL){
         for(q = *L; q ->next != p; q = q ->next);
         q->next = LNULL;
-        /* En caso de que la posición sea la última , creamos un bucle desde el principio hasta encontrar la
+        /* En caso de que la posición sea la última, creamos un bucle desde el principio hasta encontrar la
          * posición anterior a la posición dada.
          * Una vez encontrada le asignamos a next el valor nulo para eliminar el nodo de la última
          * posición.*/
