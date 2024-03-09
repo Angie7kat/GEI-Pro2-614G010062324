@@ -72,39 +72,60 @@ bool insertItem(tItemL d, tPosL p, tList* L) {
     } else {
         q->data = d;
         q->next = LNULL;
+        /*En caso de poder crear el nodo, le asignamos ele valor del item dado y le asignamos next como nulo.*/
         if (*L == LNULL) {
             *L = q;
+            /*Si la lista esta vacia, le asignamos a la lista el valor del nodo creado aneriormente..*/
         } else if (p == LNULL) {
             for (r = *L; r->next != LNULL; r = r->next);
             r->next = q;
+            /*En caso de que la posicion sea la ultima de la lista, creamos un bucle para encontrar el ultimo nodo de
+             * lista y asignarle a su next el nodo creado anteriormente..*/
         } else if (p == *L) {
             q->next = p;
             *L = q;
+            /*En caso de que la posicion sea la primera de la lista, le asignamos al next el nodo de la primera
+             * posicion y lo colocamos en la pimera posicion de la lista.*/
         } else {
             q->data = p->data;
             p->data = d;
             q->next = p->next;
             p->next = q;
+            /*Por ultimo, Si la posicion no es ni la primera ni la ultima, copiamos los datos del nodo p al nodo q y
+             * al nodo p le asignamos los nuevos valores.*/
         }
         return true;
+        /*Devolvemos falso tras insertar el nodo correctamente*/
     }
 }
 
 void deleteAtPosition(tPosL p, tList * L){
     tPosL q;
-
+    /*Creamos una variable auxiliar*/
     if(p == *L){
         *L = (*L) -> next;
-    }else if(p->next == LNULL){ //ultima pos
+        /*Si la posicion dada es la primera de la lista, le asignamos a la primera posicion el siguiente nodo para
+         * eliminar el primero.*/
+    }else if(p->next == LNULL){
         for(q = *L; q ->next != p; q = q ->next);
         q->next = LNULL;
+        /*En caso de que la posicion sea la ultima , creamos un bucle desde la primera posicion hasta encontrar la
+         * posicion anterior a la posicion dada.
+         * Una vez encontrada la posicion le asignamos a next el valor nulo para eliminar el nodo de la ultima
+         * posicion.*/
     }else{
         q = p-> next;
         p->data = q->data;
         p->next = q->next;
         p = q;
+        /*En caso de que no sea ni la primera posicion ni la ultima, le asignamos al nodo auxiliar p el valor del
+         * siguiente nodo del que queramos eliminar.
+         * Reemplazamos el valor data y next de p por los valores de q para eliminar los valores anteriores y duplicar
+         * el nodo q.
+         * Finalmente igualamos el nodo p a q para asignarle la misma direccion y eliminar los dos.*/
     }
     free(p);
+    /*Despues de eliminar el nodo, eliminamos el uso de memoria del nodo eliminado.*/
 }
 
 tItemL getItem(tPosL p, tList L){
