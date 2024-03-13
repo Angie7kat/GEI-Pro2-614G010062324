@@ -39,7 +39,7 @@ tUserCategory changeType2(char * category){
 
 
 void new(tList L, tUserName userName, tUserCategory userCategory){
-    if(findItem(userName,L) != LNULL){
+    if(findItem(userName,L) == LNULL){
         printf("+ Error: New not possible\n");
     }else{
         tPosL p = LNULL;
@@ -58,25 +58,43 @@ void new(tList L, tUserName userName, tUserCategory userCategory){
 }
 
 void delete(tList L,tUserName userName){
-    if(findItem(userName, L) != LNULL){
+    if(isEmptyList(L)){
         printf("+ Error: Delete not possible\n");
-    }else if(isEmptyList(L)){
+    }else if(findItem(userName, L) == LNULL){
         printf("+ Error: Delete not possible\n");
     }else{
         tItemL Usuario = getItem(findItem(userName, L), L);
-        deleteAtPosition(findItem(userName,L),L);
-        printf("* Delete: user %s category %s numplays %d", userName, changeType1(Usuario.userCategory), Usuario.numPlay);
+        deleteAtPosition(findItem(userName,L),&L);
+        printf("* Delete: user %s category %s numplays %d\n", userName, changeType1(Usuario.userCategory), Usuario.numPlay);
     }
 }
 
 void upgrade(tList L, tUserName userName){
-
-
+    tItemL Usuario = getItem(findItem(userName, L), L);
+    if(isEmptyList(L)){
+        printf("+ Error: Upgrade not possible\n");
+    }else if(findItem(userName, L) == LNULL){
+        printf("+ Error: Upgrade not possible\n");
+    }else if(strcmp(changeType1(Usuario.userCategory),"pro") == 0){
+        printf("+ Error: Upgrade not possible\n");
+    }else{
+        Usuario.userCategory = changeType2("pro");
+        updateItem(Usuario, findItem(userName,L),&L);
+        printf("* Upgrade: user %s category %s\n", userName, changeType1(Usuario.userCategory));
+    }
 }
 
 void play(tList L, tUserName userName, tSongTitle songTitle){
-
-
+    if(isEmptyList(L)){
+        printf("+ Error: Play not possible\n");
+    }else if(findItem(userName, L) == LNULL){
+        printf("+ Error: Play not possible\n");
+    }else{
+        tItemL Usuario = getItem(findItem(userName, L), L);
+        Usuario.numPlay = Usuario.numPlay + 1;
+        updateItem(Usuario, findItem(userName,L),&L);
+        printf("* Play: user %s plays song %s numplays %d\n", userName,songTitle, Usuario.numPlay);
+    }
 }
 
 void stats(tList L){
