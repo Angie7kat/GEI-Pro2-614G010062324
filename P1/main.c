@@ -21,7 +21,7 @@
 #include "static_list.h"
 #endif
 
-char *changeType1(tUserCategory category){
+char *changeTypeToChar(tUserCategory category){
     if(category == 0){
         return "basic";
     }else{
@@ -29,7 +29,7 @@ char *changeType1(tUserCategory category){
     }
 }
 
-tUserCategory changeType2(char * category){
+tUserCategory changeTypeToEnum(char * category){
     if(strcmp(category,"basic") == 0){
         return basic;
     }else{
@@ -50,7 +50,7 @@ void new(tList L, tUserName userName, tUserCategory userCategory){
         Usuario.userCategory = userCategory;
 
         if(insertItem(Usuario,p,&L)){
-            printf("* New: user %s category %s", userName, changeType1(userCategory));
+            printf("* New: user %s category %s", userName, changeTypeToChar(userCategory));
         }else{
             printf("+ Error: New not possible\n");
         }
@@ -65,7 +65,7 @@ void delete(tList L,tUserName userName){
     }else{
         tItemL Usuario = getItem(findItem(userName, L), L);
         deleteAtPosition(findItem(userName,L),&L);
-        printf("* Delete: user %s category %s numplays %d\n", userName, changeType1(Usuario.userCategory), Usuario.numPlay);
+        printf("* Delete: user %s category %s numplays %d\n", userName, changeTypeToChar(Usuario.userCategory), Usuario.numPlay);
     }
 }
 
@@ -75,12 +75,12 @@ void upgrade(tList L, tUserName userName){
         printf("+ Error: Upgrade not possible\n");
     }else if(findItem(userName, L) == LNULL){
         printf("+ Error: Upgrade not possible\n");
-    }else if(strcmp(changeType1(Usuario.userCategory),"pro") == 0){
+    }else if(strcmp(changeTypeToChar(Usuario.userCategory), "pro") == 0){
         printf("+ Error: Upgrade not possible\n");
     }else{
-        Usuario.userCategory = changeType2("pro");
+        Usuario.userCategory = changeTypeToEnum("pro");
         updateItem(Usuario, findItem(userName,L),&L);
-        printf("* Upgrade: user %s category %s\n", userName, changeType1(Usuario.userCategory));
+        printf("* Upgrade: user %s category %s\n", userName, changeTypeToChar(Usuario.userCategory));
     }
 }
 
@@ -107,7 +107,7 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
         case 'N':
             printf("********************\n");
             printf("Command: %s %c %s %s\n", commandNumber, command, param1, param2);
-            new(*L, param1, changeType2(param2));
+            new(*L, param1, changeTypeToEnum(param2));
             break;
         case 'D':
             printf("********************\n");
