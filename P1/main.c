@@ -63,10 +63,24 @@ void delete(tList L,tUserName userName){
     }else if(isEmptyList(L)){
         printf("+ Error: Delete not possible\n");
     }else{
-        tItemL delete = getItem(findItem(userName,L), L);
+        tItemL Usuario = getItem(findItem(userName, L), L);
         deleteAtPosition(findItem(userName,L),L);
-        printf("* Delete: user %s category %s numplays %d",userName, changeType1(delete.userCategory),delete.numPlay);
+        printf("* Delete: user %s category %s numplays %d", userName, changeType1(Usuario.userCategory), Usuario.numPlay);
     }
+}
+
+void upgrade(tList L, tUserName userName){
+
+
+}
+
+void play(tList L, tUserName userName, tSongTitle songTitle){
+
+
+}
+
+void stats(tList L){
+
 }
 
 void processCommand(char *commandNumber, char command, char *param1, char *param2, tList *L) {
@@ -80,22 +94,22 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
         case 'D':
             printf("********************\n");
             printf("Command: %s %c %s %s\n", commandNumber, command, param1, param2);
-
+            delete(*L,param1);
             break;
         case 'U':
             printf("********************\n");
             printf("Command: %s %c %s %s\n", commandNumber, command, param1, param2);
-
+            upgrade(*L,param1);
             break;
         case 'P':
             printf("********************\n");
             printf("Command: %s %c %s %s\n", commandNumber, command, param1, param2);
-
+            play(*L,param1,param2);
             break;
         case 'S':
             printf("********************\n");
             printf("Command: %s %c %s %s\n", commandNumber, command, param1, param2);
-
+            stats(*L);
             break;
         default:
             break;
