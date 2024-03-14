@@ -38,17 +38,15 @@ tUserCategory changeTypeToEnum(char * category){
 }
 
 
-void new(tList L, tUserName userName, tUserCategory userCategory){
-    if(findItem(userName,L) != LNULL){
+void new(tList *L, tUserName userName, tUserCategory userCategory){
+    if(findItem(userName,*L) != LNULL){
         printf("+ Error: New not possible\n");
     }else{
         tItemL Usuario;
-
         strcpy(Usuario.userName, userName);
         Usuario.numPlay = 0;
         Usuario.userCategory = userCategory;
-
-        if(insertItem(Usuario,LNULL,&L)){
+        if(insertItem(Usuario,LNULL,L)){
             printf("* New: user %s category %s\n", userName, changeTypeToChar(userCategory));
         }else{
             printf("+ Error: New not possible\n");
@@ -97,34 +95,57 @@ void play(tList L, tUserName userName, tSongTitle songTitle){
 }
 
 void stats(tList L){
-
+    tPosL i;
+    if(isEmptyList(L)) {
+        printf("+ Error: Stats not possible\n");
+    }
+    else {
+        int cntCategory0 = 0, cntCategory1 = 0, cntPlays0 = 0, cntPlays1 = 0;
+        for (i = first(L); i != LNULL; i=next(i, L)) {
+            tItemL Usuario = getItem(i, L);
+            if(Usuario.userCategory == 0) {
+                cntCategory0++;
+                cntPlays0 += Usuario.numPlay;
+            }
+            else {
+                cntCategory1++;
+                cntPlays1 += Usuario.numPlay;
+            }
+            printf("User %s category %s numplays %d\n", Usuario.userName, changeTypeToChar(Usuario.userCategory), Usuario.numPlay);
+        }
+        float Average0 = (float)(cntPlays0 / cntCategory0);
+        float Average1 = (float)(cntPlays1 / cntCategory1);
+        printf("Category\tUsers\tPlays\tAverage\n");
+        printf("Basic\t%5d\t%6d\t%8.2f\n", cntCategory0, cntPlays0, Average0);
+        printf("Pro\t%5d\t%6d\t%8.2f\n", cntCategory1, cntPlays1, Average1);
+    }
 }
 
 void processCommand(char *commandNumber, char command, char *param1, char *param2, tList *L) {
 
     switch (command) {
         case 'N':
-            printf("********************\n");
+            printf("********\n");
             printf("%s %c: user %s category %s\n", commandNumber, command, param1, param2);
-            new(*L, param1, changeTypeToEnum(param2));
+            new(L, param1, changeTypeToEnum(param2));
             break;
         case 'D':
-            printf("********************\n");
+            printf("********\n");
             printf("%s %c: %s\n", commandNumber, command, param1);
             delete(*L,param1);
             break;
         case 'U':
-            printf("********************\n");
+            printf("********\n");
             printf("%s %c: user %s\n", commandNumber, command, param1);
             upgrade(*L,param1);
             break;
         case 'P':
-            printf("********************\n");
+            printf("********\n");
             printf("%s %c: user %s song %s\n", commandNumber, command, param1, param2);
             play(*L,param1,param2);
             break;
         case 'S':
-            printf("********************\n");
+            printf("********\n");
             printf("%s %c:\n", commandNumber, command);
             stats(*L);
             break;
