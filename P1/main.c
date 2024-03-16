@@ -43,9 +43,11 @@ void new(tList *L, tUserName userName, tUserCategory userCategory){
         printf("+ Error: New not possible\n");
     }else{
         tItemL Usuario;
+
         strcpy(Usuario.userName, userName);
         Usuario.numPlay = 0;
         Usuario.userCategory = userCategory;
+
         if(insertItem(Usuario,LNULL,L)){
             printf("* New: user %s category %s\n", userName, changeTypeToChar(userCategory));
         }else{
@@ -125,27 +127,27 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
 
     switch (command) {
         case 'N':
-            printf("********\n");
+            printf("********************\n");
             printf("%s %c: user %s category %s\n", commandNumber, command, param1, param2);
             new(L, param1, changeTypeToEnum(param2));
             break;
         case 'D':
-            printf("********\n");
+            printf("********************\n");
             printf("%s %c: %s\n", commandNumber, command, param1);
             delete(*L,param1);
             break;
         case 'U':
-            printf("********\n");
+            printf("********************\n");
             printf("%s %c: user %s\n", commandNumber, command, param1);
             upgrade(*L,param1);
             break;
         case 'P':
-            printf("********\n");
+            printf("********************\n");
             printf("%s %c: user %s song %s\n", commandNumber, command, param1, param2);
             play(*L,param1,param2);
             break;
         case 'S':
-            printf("********\n");
+            printf("********************\n");
             printf("%s %c:\n", commandNumber, command);
             stats(*L);
             break;
