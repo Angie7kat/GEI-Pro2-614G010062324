@@ -43,11 +43,9 @@ void new(tList *L, tUserName userName, tUserCategory userCategory){
         printf("+ Error: New not possible\n");
     }else{
         tItemL Usuario;
-
         strcpy(Usuario.userName, userName);
         Usuario.numPlay = 0;
         Usuario.userCategory = userCategory;
-
         if(insertItem(Usuario,LNULL,L)){
             printf("* New: user %s category %s\n", userName, changeTypeToChar(userCategory));
         }else{
@@ -95,7 +93,14 @@ void play(tList L, tUserName userName, tSongTitle songTitle){
         printf("* Play: user %s plays song %s numplays %d\n", userName,songTitle, Usuario.numPlay);
     }
 }
-
+float average (int category, int plays) {
+    if (category == 0 || plays == 0)
+        return 0;
+    else {
+        float Average = (float)(plays / category);
+        return Average;
+    }
+}
 void stats(tList L){
     tPosL i;
     if(isEmptyList(L)) {
@@ -115,11 +120,9 @@ void stats(tList L){
             }
             printf("User %s category %s numplays %d\n", Usuario.userName, changeTypeToChar(Usuario.userCategory), Usuario.numPlay);
         }
-        float Average0 = (float)(cntPlays0 / cntCategory0);
-        float Average1 = (float)(cntPlays1 / cntCategory1);
         printf("Category\tUsers\tPlays\tAverage\n");
-        printf("Basic\t%5d\t%6d\t%8.2f\n", cntCategory0, cntPlays0, Average0);
-        printf("Pro\t%5d\t%6d\t%8.2f\n", cntCategory1, cntPlays1, Average1);
+        printf("Basic\t%5d\t%6d\t%8.2f\n", cntCategory0, cntPlays0, average(cntCategory0, cntPlays0));
+        printf("Pro\t%5d\t%6d\t%8.2f\n", cntCategory1, cntPlays1, average(cntCategory1, cntPlays1));
     }
 }
 
