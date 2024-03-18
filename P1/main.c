@@ -54,15 +54,15 @@ void new(tList *L, tUserName userName, tUserCategory userCategory){
     }
 }
 
-void delete(tList L,tUserName userName){
-    if(isEmptyList(L)){
+void delete(tList *L,tUserName userName){
+    if(isEmptyList(*L)){
         printf("+ Error: Delete not possible\n");
-    }else if(findItem(userName, L) == LNULL){
+    }else if(findItem(userName, *L) == LNULL){
         printf("+ Error: Delete not possible\n");
     }else{
-        tItemL Usuario = getItem(findItem(userName, L), L);
-        deleteAtPosition(findItem(userName,L),&L);
+        tItemL Usuario = getItem(findItem(userName, *L), *L);
         printf("* Delete: user %s category %s numplays %d\n", userName, changeTypeToChar(Usuario.userCategory), Usuario.numPlay);
+        deleteAtPosition(findItem(userName,*L),L);
     }
 }
 
@@ -137,7 +137,7 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
         case 'D':
             printf("********************\n");
             printf("%s %c: %s\n", commandNumber, command, param1);
-            delete(*L,param1);
+            delete(L,param1);
             break;
         case 'U':
             printf("********************\n");
