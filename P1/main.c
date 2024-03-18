@@ -141,7 +141,8 @@ void stats(tList L){
     else {
         int cntCategory0 = 0, cntCategory1 = 0, cntPlays0 = 0, cntPlays1 = 0;
         /* Si no está vacía, creamos variables para contar los diferentes categorías.*/
-        for (i = first(L); i != LNULL; i=next(i, L)) {
+        i = first(L);
+        while (i != LNULL) {
             /* Creamos un bucle desde la primera posición de la lista hasta la última.*/
             tItemL Usuario = getItem(i, L);
             /* Recopilamos los datos del usuario asignado a cada posición.*/
@@ -159,6 +160,7 @@ void stats(tList L){
             }
             printf("User %s category %s numplays %d\n",Usuario.userName, changeTypeToChar(Usuario.userCategory), Usuario.numPlay);
             /* Imprimimos por pantalla los datos de cada usuario.*/
+            i = next(i, L);
         }
         printf("Category  Users  Plays  Average\n");
         printf("Basic     %5d %6d %8.2f\n", cntCategory0, cntPlays0, average(cntCategory0, cntPlays0));
