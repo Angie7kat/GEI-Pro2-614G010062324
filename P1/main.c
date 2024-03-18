@@ -46,7 +46,7 @@ tUserCategory changeTypeToEnum(char * category){
 /* Función auxiliar que nos ayudará a calcular el promedio en la función stats ya que los valores a dividir son int
  * y queremos que sea float.*/
 float average (int category, int plays) {
-    if (category == 0 && plays == 0)
+    if (category == 0 || plays == 0)
         return 0;
         /* Si los valores ingresados son 0, devuelve el valor 0.*/
     else {
