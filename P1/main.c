@@ -120,9 +120,9 @@ void stats(tList L){
             }
             printf("User %s category %s numplays %d\n", Usuario.userName, changeTypeToChar(Usuario.userCategory), Usuario.numPlay);
         }
-        printf("Category\tUsers\tPlays\tAverage\n");
-        printf("Basic\t%5d\t%6d\t%8.2f\n", cntCategory0, cntPlays0, average(cntCategory0, cntPlays0));
-        printf("Pro\t%5d\t%6d\t%8.2f\n", cntCategory1, cntPlays1, average(cntCategory1, cntPlays1));
+        printf("Category  Users  Plays  Average\n");
+        printf("Basic     %5d %6d %8.2f\n", cntCategory0, cntPlays0, average(cntCategory0, cntPlays0));
+        printf("Pro       %5d %6d %8.2f\n", cntCategory1, cntPlays1, average(cntCategory1, cntPlays1));
     }
 }
 
