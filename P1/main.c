@@ -37,6 +37,13 @@ tUserCategory changeTypeToEnum(char * category){
     }
 }
 
+float average (int category, int plays) {
+    if (category == 0 && plays == 0)
+        return 0;
+    else {
+        return ((float)plays / (float)category);
+    }
+}
 
 void new(tList *L, tUserName userName, tUserCategory userCategory){
     if(findItem(userName,*L) != LNULL){
@@ -63,44 +70,38 @@ void delete(tList *L,tUserName userName){
         tItemL Usuario = getItem(findItem(userName, *L), *L);
         printf("* Delete: user %s category %s numplays %d\n", userName, changeTypeToChar(Usuario.userCategory), Usuario.numPlay);
         deleteAtPosition(findItem(userName,*L),L);
+
     }
 }
 
-void upgrade(tList L, tUserName userName){
-    tItemL Usuario = getItem(findItem(userName, L), L);
-    if(isEmptyList(L)){
+void upgrade(tList *L, tUserName userName){
+    tItemL Usuario = getItem(findItem(userName, *L), *L);
+    if(isEmptyList(*L)){
         printf("+ Error: Upgrade not possible\n");
-    }else if(findItem(userName, L) == LNULL){
+    }else if(findItem(userName, *L) == LNULL){
         printf("+ Error: Upgrade not possible\n");
     }else if(strcmp(changeTypeToChar(Usuario.userCategory), "pro") == 0){
         printf("+ Error: Upgrade not possible\n");
     }else{
         Usuario.userCategory = changeTypeToEnum("pro");
-        updateItem(Usuario, findItem(userName,L),&L);
+        updateItem(Usuario, findItem(userName,*L),L);
         printf("* Upgrade: user %s category %s\n", userName, changeTypeToChar(Usuario.userCategory));
     }
 }
 
-void play(tList L, tUserName userName, tSongTitle songTitle){
-    if(isEmptyList(L)){
+void play(tList *L, tUserName userName, tSongTitle songTitle){
+    if(isEmptyList(*L)){
         printf("+ Error: Play not possible\n");
-    }else if(findItem(userName, L) == LNULL){
+    }else if(findItem(userName, *L) == LNULL){
         printf("+ Error: Play not possible\n");
     }else{
-        tItemL Usuario = getItem(findItem(userName, L), L);
+        tItemL Usuario = getItem(findItem(userName, *L), *L);
         Usuario.numPlay ++;
-        updateItem(Usuario, findItem(userName,L),&L);
+        updateItem(Usuario, findItem(userName,*L),L);
         printf("* Play: user %s plays song %s numplays %d\n", userName,songTitle, Usuario.numPlay);
     }
 }
-float average (int category, int plays) {
-    if (category == 0 || plays == 0)
-        return 0;
-    else {
-        float Average = (float)(plays / category);
-        return Average;
-    }
-}
+
 void stats(tList L){
     tPosL i;
     if(isEmptyList(L)) {
@@ -110,6 +111,7 @@ void stats(tList L){
         int cntCategory0 = 0, cntCategory1 = 0, cntPlays0 = 0, cntPlays1 = 0;
         for (i = first(L); i != LNULL; i=next(i, L)) {
             tItemL Usuario = getItem(i, L);
+            //Si es básico
             if(Usuario.userCategory == 0) {
                 cntCategory0++;
                 cntPlays0 += Usuario.numPlay;
@@ -118,7 +120,8 @@ void stats(tList L){
                 cntCategory1++;
                 cntPlays1 += Usuario.numPlay;
             }
-            printf("User %s category %s numplays %d\n", Usuario.userName, changeTypeToChar(Usuario.userCategory), Usuario.numPlay);
+
+            printf("User %s category %s numplays %d\n",Usuario.userName, changeTypeToChar(Usuario.userCategory), Usuario.numPlay);
         }
         printf("Category  Users  Plays  Average\n");
         printf("Basic     %5d %6d %8.2f\n", cntCategory0, cntPlays0, average(cntCategory0, cntPlays0));
@@ -136,18 +139,18 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
             break;
         case 'D':
             printf("********************\n");
-            printf("%s %c: %s\n", commandNumber, command, param1);
+            printf("%s %c: user %s\n", commandNumber, command, param1);
             delete(L,param1);
             break;
         case 'U':
             printf("********************\n");
             printf("%s %c: user %s\n", commandNumber, command, param1);
-            upgrade(*L,param1);
+            upgrade(L,param1);
             break;
         case 'P':
             printf("********************\n");
             printf("%s %c: user %s song %s\n", commandNumber, command, param1, param2);
-            play(*L,param1,param2);
+            play(L,param1,param2);
             break;
         case 'S':
             printf("********************\n");
@@ -193,18 +196,12 @@ int main(int nargs, char **args) {
     if (nargs > 1) {
         file_name = args[1];
     } else {
-        #ifdef INPUT_FILE
+#ifdef INPUT_FILE
         file_name = INPUT_FILE;
-        #endif
+#endif
     }
 
     readTasks(file_name, &L);
 
     return 0;
 }
-
-
-
-
-
-
