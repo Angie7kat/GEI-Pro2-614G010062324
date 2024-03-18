@@ -4,7 +4,7 @@
  * AUTHOR 1: Ángela Fouz Suárez LOGIN 1: angela.fouz
  * AUTHOR 2: Nolan Duteil       LOGIN 2: nolan.duteil
  * GROUP: 3.1
- * DATE: 09 / 03 / 24
+ * DATE: 18 / 03 / 24
  */
 
 #ifndef DYNAMIC_LIST_H

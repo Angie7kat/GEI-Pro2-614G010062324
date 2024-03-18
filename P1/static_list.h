@@ -4,7 +4,7 @@
  * AUTHOR 1: Ángela Fouz Suárez LOGIN 1: angela.fouz
  * AUTHOR 2: Nolan Duteil       LOGIN 2: nolan.duteil
  * GROUP: 3.1
- * DATE: 04 / 03 / 2024
+ * DATE: 18 / 03 / 2024
  */
 #ifndef STATIC_LIST_H
 #define STATIC_LIST_H

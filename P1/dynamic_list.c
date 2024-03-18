@@ -4,7 +4,7 @@
  * AUTHOR 1: Ángela Fouz Suárez LOGIN 1: angela.fouz
  * AUTHOR 2: Nolan Duteil       LOGIN 2: nolan.duteil
  * GROUP: 3.1
- * DATE: 09 / 03 / 24
+ * DATE: 18 / 03 / 24
  */
 
 #include "dynamic_list.h"
@@ -103,7 +103,7 @@ void deleteAtPosition(tPosL p, tList * L){
     tPosL q;
     /* Creamos una variable auxiliar*/
     if(p == *L){
-        *L = (*L) -> next;
+        *L = p -> next;
         /* Si la posición dada es la primera de la lista, le asignamos al siguiente nodo la primera posición para
          * poder eliminarlo.*/
     }else if(p->next == LNULL){
