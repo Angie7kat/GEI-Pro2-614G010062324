@@ -21,17 +21,18 @@
 #include "static_list.h"
 #endif
 
+/* Función auxiliar que nos ayudará a imprimir los valores de tUserCategory ya que este es un enum.*/
 char *changeTypeToChar(tUserCategory category){
     if(category == 0){
         return "basic";
-        /* En caso de que su valor sea 0, devuelve basic en tipo char.*/
+        /* En caso de que el enum valga 0, devuelve basic en tipo char.*/
     }else{
         return "pro";
         /* De lo contrario, devuelve pro en tipo char.*/
-
     }
 }
 
+/* Función auxiliar que nos ayudará a introducir un valor char y pasarlo a enum para asignarlo a tUserCategory.*/
 tUserCategory changeTypeToEnum(char * category){
     if(strcmp(category,"basic") == 0){
         return basic;
@@ -42,13 +43,15 @@ tUserCategory changeTypeToEnum(char * category){
     }
 }
 
+/* Función auxiliar que nos ayudará a calcular el promedio en la función stats ya que los valores a dividir son int
+ * y queremos que sea float.*/
 float average (int category, int plays) {
     if (category == 0 && plays == 0)
         return 0;
         /* Si los valores ingresados son 0, devuelve el valor 0.*/
-else {
-    return ((float)plays / (float)category);
-    /* De lo contrario devuelve el promedio.*/
+    else {
+        return ((float)plays / (float)category);
+        /* De lo contrario devuelve el promedio.*/
     }
 }
 
@@ -76,7 +79,7 @@ void new(tList *L, tUserName userName, tUserCategory userCategory){
 void delete(tList *L,tUserName userName){
     if(isEmptyList(*L)){
         printf("+ Error: Delete not possible\n");
-        /* Si la lista está vacía, devuelve error.*/
+        /* Si la lista está vacía, devuelve error, no hay nada que borrar.*/
     }else if(findItem(userName, *L) == LNULL){
         printf("+ Error: Delete not possible\n");
         /* En caso de que la lista no esté vacía y el usuario no se encuentre en ella, también devuelve error.*/
@@ -84,14 +87,14 @@ void delete(tList *L,tUserName userName){
         tItemL Usuario = getItem(findItem(userName, *L), *L);
         printf("* Delete: user %s category %s numplays %d\n", userName, changeTypeToChar(Usuario.userCategory), Usuario.numPlay);
         deleteAtPosition(findItem(userName,*L),L);
-        /* En caso contrario, recopilamos sus datos y su posición en la lista, los imprimimos en pantalla
-         * y lo eliminamos.*/
+        /* En caso contrario, recopilamos sus datos y su posición en la lista, los imprimimos en pantalla y lo
+         * eliminamos.*/
     }
 }
 
 void upgrade(tList *L, tUserName userName){
     tItemL Usuario = getItem(findItem(userName, *L), *L);
-    /* Recopilamos la imformación del usuario.*/
+    /* Recopilamos la información del usuario.*/
     if(isEmptyList(*L)){
         printf("+ Error: Upgrade not possible\n");
         /* En caso de que la lista esté vacía, devuelve error.*/
@@ -105,7 +108,7 @@ void upgrade(tList *L, tUserName userName){
         Usuario.userCategory = changeTypeToEnum("pro");
         updateItem(Usuario, findItem(userName,*L),L);
         printf("* Upgrade: user %s category %s\n", userName, changeTypeToChar(Usuario.userCategory));
-        /* En caso de que el usuario pertenezca a la categoría basic, lo cambiamos a categoría pro y imprimimos sus
+        /* En caso de que el usuario pertenezca a la categoría basic, lo cambiamos a categoría pro e imprimimos sus
          * datos en pantalla.*/
     }
 }
@@ -155,12 +158,12 @@ void stats(tList L){
                  * categoría.*/
             }
             printf("User %s category %s numplays %d\n",Usuario.userName, changeTypeToChar(Usuario.userCategory), Usuario.numPlay);
-            /* Imprmimos por pantalla los datos de cada usuario.*/
+            /* Imprimimos por pantalla los datos de cada usuario.*/
         }
         printf("Category  Users  Plays  Average\n");
         printf("Basic     %5d %6d %8.2f\n", cntCategory0, cntPlays0, average(cntCategory0, cntPlays0));
         printf("Pro       %5d %6d %8.2f\n", cntCategory1, cntPlays1, average(cntCategory1, cntPlays1));
-        /* Finalmente creamos una tabla para mostrar la información de cada caregoría con el número de usuarios,
+        /* Finalmente creamos una tabla para mostrar la información de cada categoría con el número de usuarios,
          * reproducciones y el promedio.*/
     }
 }
