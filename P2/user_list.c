@@ -12,22 +12,21 @@
 #include <stdlib.h>
 #include <string.h>
 
-void createEmptyListU(tListU* L){
+void createEmptyListU(tListU *L){
     *L = NULLU;
     /* Creamos una lista vacía asignándole un valor NULL al puntero lista.*/
 }
-
 /* Función que crea nodos que son necesarios para operar en la lista, ya que esta funciona por nodos.*/
-bool createNode(tPosU* p){
+bool createNodeU(tPosU *p){
     *p = malloc(sizeof(struct tNode));
     return *p != NULLU;
-    /* Devuelve true si el nodo ha sido creado correctamente.*/
 }
 
 bool isEmptyListU(tListU L){
-    return L == NULLU;
+    return (L == NULLU);
     /* Devuelve true si la lista está vacía y false si no lo está.*/
 }
+
 tPosU firstU(tListU L){
     return L;
     /* Devolvemos la primera posición de la lista.*/
@@ -36,7 +35,7 @@ tPosU firstU(tListU L){
 tPosU lastU(tListU L){
     tPosU p;
     /* Creamos una variable auxiliar para recorrer el bucle.*/
-    for(p=L; p->next != NULLU; p = p->next);
+    for (p = L; p->next != NULLU; p = p->next);
     return p;
     /* Creamos un bucle para recorrer la lista y llegar a la última posición para al final devolverla.*/
 }
@@ -50,34 +49,43 @@ tPosU nextU(tPosU p, tListU L){
 tPosU previousU(tPosU p, tListU L){
     tPosU q;
     /* Creamos una variable auxiliar para recorrer el bucle.*/
-    if(p == L){
+    if (p == L){
         return NULLU;
         /* Si la posición indicada es la primera no hay previo, devolvemos nulo.*/
     }else{
         /* En caso contrario debemos recorrer la lista hasta esa posición.*/
-        for(q = L; q->next != p; q = q->next);
+        for (q = L; q->next != p; q = q->next);
         return q;
         /* El bucle lo recorremos hasta justo la posición anterior a la que se indica (q->next != p) y así ya tenemos
-         * directamente el valor previo.*/
+        * directamente el valor previo.*/
     }
 }
-bool insertItemU(tItemU d, tListU *L) {
-    tPosU q, p;
-    if (!createNode(&q){
-        return false;
+
+tPosU findPositionU(tListU L, tItemU d){
+    tPosU p, tmp;
+    p = L;
+    tmp = L;
+    while ((p != NULLU) && (p->data < d)){
+        tmp = p;
+        p = p->next;
     }
-    else {
+    return tmp;
+}
+
+bool insertItemU(tItemU d, tListU *L){
+    tPosU q, p;
+    if (!createNodeU(&q)){
+        return false;
+    }else{
         q->data = d;
         q->next = NULLU;
-        if (isEmptyList(*L) {
+        if (isEmptyListU(*L)){
             *L = q;
-        }
-        else if (d < (*L)->data) {
+        }else if(d < (*L)->data){
             q->next = *L;
             *L = q;
-        }
-        else {
-            p = findPosition(*L, d);
+        }else{
+            p = findPositionU(*L, d);
             q->next = p->next;
             p->next = q;
         }
@@ -85,22 +93,20 @@ bool insertItemU(tItemU d, tListU *L) {
     }
 }
 
-void deleteAtPositionU(tPosU p, tListU *L) {
+void deleteAtPositionU(tPosU p, tListU *L){
     tPosU q;
-    if (p == *L) {
+    if (p == *L){
         *L = (*L)->next;
-    }
-    else if (p->next == NULLU) {
+    }else if(p->next == NULLU){
         for (q = *L; q->next->next != p; q = q->next);
         q->next = NULLU;
-    }
-    else
+    }else{
         q = p->next;
-    p->data = q->data;
-    p->next = q->next;
-    p = q;
-}
-free(p);
+        p->data = q->data;
+        p->next = q->next;
+        p = q;
+    }
+    free(p);
 }
 
 tItemU getItemU(tPosU p, tListU L){
@@ -108,17 +114,51 @@ tItemU getItemU(tPosU p, tListU L){
     /* Devolvemos la data de la posición indicada.*/
 }
 
-void updateItemU(tItemU d, tPosU p, tListU * L){
+void updateItemU(tItemU d, tPosU p, tListU *L){
     p->data = d;
     /* Actualizamos el valor en p->data.*/
 }
 
-tPosU findItemU(tUserName d, tListU L) {
+tPosU findItemU(tUserName name, tListU L){
     tPosU p;
     for (p = L; (p != NULLU) && (p->data < d); p = p->next);
     return p;
 }
 
+void deleteListU(tListU *L){
+    tPosU p;
+    while (!isEmptyListU(*L)){
+        p = *L;
+        *L = (*L)->next;
+        free(p);
+    }
+}
+
+bool copyListU(tListU L, tListU *M){
+    tPosU p, q, r;
+    bool result = true;
+    createEmptyListU(M);
+    if (!isEmptyListU(L)){
+        p = L;
+        while ((p != NULLU) && (createNodeU(&r))){
+            r->data = p->data;
+            r->next = NULLU;
+            if (p == L){
+                *M = r;
+                q = r;
+            }else{
+                q->next = r;
+                q = r;
+            }
+            p = p->next;
+        }
+        if (p != NULLU){
+            result = false;
+            deleteListU(M);
+        }
+    }
+    return result;
+}
 
 
 
