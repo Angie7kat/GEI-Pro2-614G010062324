@@ -61,19 +61,8 @@ tPosU previousU(tPosU p, tListU L){
     }
 }
 
-tPosU findPositionU(tListU L, tItemU d){
-    tPosU p, tmp;
-    p = L;
-    tmp = L;
-    while ((p != NULLU) && (p->data < d)){
-        tmp = p;
-        p = p->next;
-    }
-    return tmp;
-}
-
 bool insertItemU(tItemU d, tListU *L){
-    tPosU q, p;
+    tPosU q, p, u, tmp;
     if (!createNodeU(&q)){
         return false;
     }else{
@@ -85,7 +74,13 @@ bool insertItemU(tItemU d, tListU *L){
             q->next = *L;
             *L = q;
         }else{
-            p = findPositionU(*L, d);
+            u = *L;
+            tmp = *L;
+            while ((u != NULLU) && (u->data < d)){
+                tmp = u;
+                u = u->next;
+            }
+            p = tmp;
             q->next = p->next;
             p->next = q;
         }
@@ -121,8 +116,17 @@ void updateItemU(tItemU d, tPosU p, tListU *L){
 
 tPosU findItemU(tUserName name, tListU L){
     tPosU p;
-    for (p = L; (p != NULLU) && (p->data < d); p = p->next);
+    /* Creamos una variable auxilar que nos ayudará con el bucle.*/
+    for(p = L; (p != NULLU) && (strcmp(p->data.userName, name) != 0); p = p->next);
+    /* Recorremos la lista comparando el nombre introducido con los de la lista hasta encontrar la posición en la que
+     * está.*/
+    if (p == NULLU || strcmp(p->data.userName,name) != 0){
+        return NULLU;
+        /* Si hemos llegado al final sin encontrar el name devolvemos un nulo, no ha sido posible encontrar la
+         * posición o no está ese valor en la lista.*/
+    }
     return p;
+    /* Si lo hemos encontrado devolvemos la posición en la que está.*/
 }
 
 

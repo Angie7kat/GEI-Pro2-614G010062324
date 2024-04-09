@@ -15,13 +15,18 @@
 #include <stdbool.h>
 #define NULLU NULL
 
-typedef int tItemU;
 typedef struct tNode* tPosU;
+typedef struct{
+    tUserName userName;
+    tPlayTime totalPlayTime;
+    tUserCategory userCategory;
+    tListS songlIST;
+}tItemU;
 struct tNode{
     tItemU data;
     tPosU next;
-
 };
+
 typedef tPosU tListU;
 
 void createEmptyListU(tListU* L);
