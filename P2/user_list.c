@@ -125,40 +125,6 @@ tPosU findItemU(tUserName name, tListU L){
     return p;
 }
 
-void deleteListU(tListU *L){
-    tPosU p;
-    while (!isEmptyListU(*L)){
-        p = *L;
-        *L = (*L)->next;
-        free(p);
-    }
-}
-
-bool copyListU(tListU L, tListU *M){
-    tPosU p, q, r;
-    bool result = true;
-    createEmptyListU(M);
-    if (!isEmptyListU(L)){
-        p = L;
-        while ((p != NULLU) && (createNodeU(&r))){
-            r->data = p->data;
-            r->next = NULLU;
-            if (p == L){
-                *M = r;
-                q = r;
-            }else{
-                q->next = r;
-                q = r;
-            }
-            p = p->next;
-        }
-        if (p != NULLU){
-            result = false;
-            deleteListU(M);
-        }
-    }
-    return result;
-}
 
 
 
