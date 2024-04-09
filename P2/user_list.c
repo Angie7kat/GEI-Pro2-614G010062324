@@ -90,18 +90,20 @@ bool insertItemU(tItemU d, tListU *L){
 
 void deleteAtPositionU(tPosU p, tListU *L){
     tPosU q;
-    if (p == *L){
-        *L = (*L)->next;
-    }else if(p->next == NULLU){
-        for (q = *L; q->next->next != p; q = q->next);
-        q->next = NULLU;
-    }else{
-        q = p->next;
-        p->data = q->data;
-        p->next = q->next;
-        p = q;
+    if (p->data.songList.Item == NULLS) {
+        if (p == *L) {
+            *L = (*L)->next;
+        } else if (p->next == NULLU) {
+            for (q = *L; q->next->next != p; q = q->next);
+            q->next = NULLU;
+        } else {
+            q = p->next;
+            p->data = q->data;
+            p->next = q->next;
+            p = q;
+        }
+        free(p);
     }
-    free(p);
 }
 
 tItemU getItemU(tPosU p, tListU L){

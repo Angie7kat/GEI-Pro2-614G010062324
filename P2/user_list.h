@@ -20,7 +20,7 @@ typedef struct{
     tUserName userName;
     tPlayTime totalPlayTime;
     tUserCategory userCategory;
-    tListS songlIST;
+    tListS songList;
 }tItemU;
 struct tNode{
     tItemU data;
