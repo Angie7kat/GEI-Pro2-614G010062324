@@ -77,7 +77,7 @@ tPosU previousU(tPosU p, tListU L);
  * PreCD: La posición introducida tiene que ser válida dentro de la lista.
  * PostCD: Ninguna
  */
-bool insertItemU(tItemU d, tListU* L);
+bool insertItemU(tItemU Item, tListU* L);
 /*
  * Objetivo: Insertar en la lista de forma ordenada, en función del campo username.
  * Entradas: El item a insertar y la lista en la que se quiere insertar.

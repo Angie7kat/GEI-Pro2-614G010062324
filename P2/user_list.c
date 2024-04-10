@@ -42,8 +42,7 @@ tPosU lastU(tListU L){
 
 tPosU nextU(tPosU p, tListU L){
     return p->next;
-    /* Devolvemos la posición siguiente de la indicada; a diferencia de la estática aquí el último puntero apunta a
-     * null así que no es necesario hacer un filtro.*/
+    /* Devolvemos la posición siguiente de la indicada.*/
 }
 
 tPosU previousU(tPosU p, tListU L){
@@ -61,28 +60,31 @@ tPosU previousU(tPosU p, tListU L){
     }
 }
 
-bool insertItemU(tItemU d, tListU *L){
-    tPosU q, p, u, tmp;
-    if (!createNodeU(&q)){
+tPosU findPosition(tListU L, tItemU Item){
+    tPosU p;
+    p = L;
+    while(p->next!= NULLU && (strcmp(p->next->data.userName, Item.userName) < 0)){
+        p = p->next;
+    }
+    return p;
+}
+
+bool insertItemU(tItemU Item, tListU *L) {
+    tPosU p, q;
+    if(!createNodeU(&p)){
         return false;
     }else{
-        q->data = d;
-        q->next = NULLU;
-        if (isEmptyListU(*L)){
-            *L = q;
-        }else if(d < (*L)->data){
-            q->next = *L;
-            *L = q;
+        p->data = Item;
+        p->next = NULLU;
+        if(isEmptyListU(*L)){
+            *L = p;
+        }else if(strcmp(Item.userName,(*L)->data.userName) < 0){
+                p->next = *L;
+                *L = p;
         }else{
-            u = *L;
-            tmp = *L;
-            while ((u != NULLU) && (u->data < d)){
-                tmp = u;
-                u = u->next;
-            }
-            p = tmp;
-            q->next = p->next;
-            p->next = q;
+            q = findPosition(*L, Item);
+            p->next = q->next;
+            q->next = p;
         }
         return true;
     }
@@ -90,20 +92,18 @@ bool insertItemU(tItemU d, tListU *L){
 
 void deleteAtPositionU(tPosU p, tListU *L){
     tPosU q;
-    if (p->data.songList.Item == NULLS) {
-        if (p == *L) {
+        if(p == *L){
             *L = (*L)->next;
-        } else if (p->next == NULLU) {
-            for (q = *L; q->next->next != p; q = q->next);
+        }else if(p->next == NULLU){
+            for(q = *L; q->next != p; q = q->next);
             q->next = NULLU;
-        } else {
+        }else{
             q = p->next;
             p->data = q->data;
             p->next = q->next;
             p = q;
         }
         free(p);
-    }
 }
 
 tItemU getItemU(tPosU p, tListU L){
