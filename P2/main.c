@@ -16,7 +16,47 @@
 
 #define MAX_BUFFER 255
 
+void new(tListU *L, tUserName name, tUserCategory category){
+    tItemU item1;
 
+    tPosU pos;
+    pos = findItemU(name, *L);
+
+    if(pos == NULLU){
+        strcpy(item1.userName, name);
+        item1.totalPlayTime = 0;
+        item1.userCategory = category;
+        createEmptyListS(&item1.songList);
+        insertItemU(item1, L);
+        printf("* New: user %s category %d\n", name, category);
+    }else{
+        printf("+ Error: New not possible\n");
+    }
+}
+
+void add(tListU *L, tUserName name, tSongTitle song) {
+    if(isEmptyListU(*L))
+        printf("+ Error: Add not possible");
+    else if(findItemU(name, *L) != NULLU)
+        printf("+ Error: Add not possible");
+    else {
+        tItemU usuario = getItemU(findItemU(name, *L), *L);
+        if(isEmptyListS(usuario.songList))
+            printf("+ Error: Add not possible");
+        else if(findItemS(song, usuario.songList) != NULLS)
+            printf("+ Error: Add not possible");
+        else{
+            tItemS item;
+            strcpy(item.songTitle, song);
+            item.playTime = 0;
+            if(!insertItemS(item, NULLS, &usuario.songList))
+                printf("+ Error: Add not possible");
+            else
+                printf("* Add: user %s adds song %s", name, song);
+
+        }
+    }
+}
 
 void processCommand(char *commandNumber, char command, char *param1, char *param2, char *param3) {
 
@@ -70,10 +110,11 @@ void readTasks(char *filename) {
 }
 
 
+
 int main(int nargs, char **args) {
-
+    tListU L;
     char *file_name = "new.txt";
-
+    createEmptyListU(&L);
     if (nargs > 1) {
         file_name = args[1];
     } else {
