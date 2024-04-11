@@ -60,7 +60,7 @@ tPosU previousU(tPosU p, tListU L){
     }
 }
 
-tPosU findPosition(tListU L, tItemU Item){
+tPosU findPositionU(tListU L, tItemU Item){
     tPosU p;
     p = L;
     while(p->next!= NULLU && (strcmp(p->next->data.userName, Item.userName) < 0)){
@@ -81,8 +81,10 @@ bool insertItemU(tItemU Item, tListU *L) {
         }else if(strcmp(Item.userName,(*L)->data.userName) < 0){
                 p->next = *L;
                 *L = p;
+                // p = *L
+                // mover pos 1 para delante
         }else{
-            q = findPosition(*L, Item);
+            q = findPositionU(*L, Item);
             p->next = q->next;
             q->next = p;
         }
