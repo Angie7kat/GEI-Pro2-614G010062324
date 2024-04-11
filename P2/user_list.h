@@ -4,7 +4,7 @@
  * AUTHOR 1: Ángela Fouz Suárez LOGIN 1: angela.fouz
  * AUTHOR 2: Nolan Duteil       LOGIN 2: nolan.duteil
  * GROUP: 3.1
- * DATE: ** / ** / **
+ * DATE: 11 / 04 / 2024
  */
 
 #ifndef USER_LIST_H
@@ -63,17 +63,17 @@ tPosU lastU(tListU L);
  */
 tPosU nextU(tPosU p, tListU L);
 /*
- * Objetivo: Devolver en la lista indicada el elemento siguiente al de la posición indicada(o LNULL si la posición no tiene siguiente).
+ * Objetivo: Devolver en la lista indicada el elemento siguiente al de la posición indicada(o NULLU si la posición no tiene siguiente).
  * Entradas: Una lista y la posición de la que se quiere obtener el siguiente.
- * Salidas: La posición del siguiente elemento de la lista (o LNULL si la posición no tiene siguiente).
+ * Salidas: La posición del siguiente elemento de la lista (o NULLU si la posición no tiene siguiente).
  * PreCD: La posición introducida tiene que ser válida dentro de la lista.
  * PostCD: Ninguna.
  */
 tPosU previousU(tPosU p, tListU L);
 /*
- * Objetivo: Devolver la posición en la lista del elemento anterior al de la posición indicada(o LNULL si la posición no tiene anterior).
+ * Objetivo: Devolver la posición en la lista del elemento anterior al de la posición indicada(o NULLU si la posición no tiene anterior).
  * Entradas: Una lista y la posición de la que se quiere obtener el anterior.
- * Salidas: La posición anterior a la dada (o LNULL si la posición no tiene anterior).
+ * Salidas: La posición anterior a la dada (o NULLU si la posición no tiene anterior).
  * PreCD: La posición introducida tiene que ser válida dentro de la lista.
  * PostCD: Ninguna
  */

@@ -4,7 +4,7 @@
  * AUTHOR 1: Ángela Fouz Suárez LOGIN 1: angela.fouz
  * AUTHOR 2: Nolan Duteil       LOGIN 2: nolan.duteil
  * GROUP: 3.1
- * DATE: ** / ** / **
+ * DATE: 11 / 04 / 2024
  */
 
 #ifndef SONG_LIST_H
@@ -57,26 +57,26 @@ tPosS lastS (tListS L);
  */
 tPosS nextS (tPosS p, tListS L);
 /*
- * Objetivo: Devolver en la lista indicada el elemento siguiente al de la posición indicada(o LNULL si la posición no tiene siguiente).
+ * Objetivo: Devolver en la lista indicada el elemento siguiente al de la posición indicada(o NULLS si la posición no tiene siguiente).
  * Entradas: Una lista y la posición de la que se quiere obtener el siguiente.
- * Salidas: La posición del siguiente elemento de la lista (o LNULL si la posición no tiene siguiente).
+ * Salidas: La posición del siguiente elemento de la lista (o NULLS si la posición no tiene siguiente).
  * PreCD: La posición introducida tiene que ser válida dentro de la lista.
  * PostCD: Ninguna.
  */
 tPosS previousS (tPosS p, tListS L);
 /*
- * Objetivo: Devolver la posición en la lista del elemento anterior al de la posición indicada(o LNULL si la posición no tiene anterior).
+ * Objetivo: Devolver la posición en la lista del elemento anterior al de la posición indicada(o NULLS si la posición no tiene anterior).
  * Entradas: Una lista y la posición de la que se quiere obtener el anterior.
- * Salidas: La posición anterior a la dada (o LNULL si la posición no tiene anterior).
+ * Salidas: La posición anterior a la dada (o NULLS si la posición no tiene anterior).
  * PreCD: La posición introducida tiene que ser válida dentro de la lista.
  * PostCD: Ninguna
  */
 bool insertItemS (tItemS Item, tPosS p, tListS* L);
 /*
- * Objetivo: Inserta un elemento en la lista en la posición indicada. Si la posición es LNULL, entonces se añade al final.
+ * Objetivo: Inserta un elemento en la lista en la posición indicada. Si la posición es NULLS, entonces se añade al final.
  * Entradas: El elemento a insertar, su posición y la lista en la que se va a introducir.
  * Salidas: Devuelve un valor true si el elemento fue insertado y la lista modificada con el nuevo item añadido; false en caso contrario.
- * PreCD: La posición indicada es una posición válida en la lista o bien nula (LNULL).
+ * PreCD: La posición indicada es una posición válida en la lista o bien nula (NULLS).
  * PostCD: Las posiciones de los elementos de la lista posteriores a la del elemento insertado pueden haber variado.
  */
 void deleteAtPositionS (tPosS p, tListS* L);
