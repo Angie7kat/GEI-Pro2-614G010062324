@@ -16,6 +16,13 @@
 
 #define MAX_BUFFER 255
 
+/*    NEW
+ * Objetivo: 
+ * Entradas: 
+ * Salidas:
+ * PreCD: 
+ * PostCD:
+ */
 void new(tListU *L, tUserName name, tUserCategory category){
     tItemU item1;
 
@@ -34,6 +41,13 @@ void new(tListU *L, tUserName name, tUserCategory category){
     }
 }
 
+/*    ADD
+ * Objetivo: 
+ * Entradas: 
+ * Salidas:
+ * PreCD: 
+ * PostCD:
+ */
 void add(tListU *L, tUserName name, tSongTitle song) {
     if(isEmptyListU(*L))
         printf("+ Error: Add not possible");
