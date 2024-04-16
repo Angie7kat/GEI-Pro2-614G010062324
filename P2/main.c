@@ -16,6 +16,17 @@
 
 #define MAX_BUFFER 255
 
+/* Función auxiliar que nos ayudará a imprimir los valores de tUserCategory ya que este es un enum.*/
+char *changeTypeToChar(tUserCategory category){
+    if(category == 0){
+        return "basic";
+        /* En caso de que el enum valga 0, devuelve basic en tipo char.*/
+    }else{
+        return "pro";
+        /* De lo contrario, devuelve pro en tipo char.*/
+    }
+}
+
 /* Función auxiliar que nos ayudará a introducir un valor char y pasarlo a enum para asignarlo a tUserCategory.*/
 tUserCategory changeTypeToEnum(char * category){
     if(strcmp(category,"basic") == 0){
@@ -114,7 +125,37 @@ void add(tListU *L, tUserName name, tSongTitle song) {
  * PreCD: La lista debe estar inicializada.
  */
 void stats(tListU L){
-
+    tPosU i;
+    /* Creamos una variable auxiliar para recorrer el bucle.*/
+    if(isEmptyListU(L)) {
+        printf("+ Error: Stats not possible\n");
+        /* Si la lista está vacía, muestra error.*/
+    }
+    else {
+        int cntCategory0 = 0, cntCategory1 = 0, cntPlays0 = 0, cntPlays1 = 0;
+        /* Si no está vacía, creamos variables para contar los diferentes categorías.*/
+        i = firstU(L);
+        while (i != NULLU) {
+            /* Creamos un bucle desde la primera posición de la lista hasta la última.*/
+            tItemU Usuario = getItemU(i, L);
+            /* Recopilamos los datos del usuario asignado a cada posición.*/
+            if(Usuario.userCategory == 0) {
+                cntCategory0++;
+                cntPlays0 += Usuario.totalPlayTime;
+                /* En caso de ser de la categoría basic, añadimos 1 al contador basic y sumamos las reproducciones de
+                 * su categoría.*/
+            }
+            else {
+                cntCategory1++;
+                cntPlays1 += Usuario.totalPlayTime;
+                /* Si pertenece a la categoría pro, añadimos 1 al contador pro y sumamos las reproducciones de su
+                 * categoría.*/
+            }
+            printf("User %s category %s totalplaytime %d\n",Usuario.userName, changeTypeToChar(Usuario.userCategory), Usuario.totalPlayTime);
+            /* Imprimimos por pantalla los datos de cada usuario.*/
+            i = nextU(i, L);
+        }
+    }
 }
 /*    REMOVE
  * Objetivo: Eliminar todos los usuarios basic cuyo contador de tiempo de reproducción exceda maxTime minutos.
