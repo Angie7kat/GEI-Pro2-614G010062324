@@ -126,6 +126,7 @@ void add(tListU *L, tUserName name, tSongTitle song) {
  */
 void stats(tListU L){
     tPosU i;
+    tPosS u;
     /* Creamos una variable auxiliar para recorrer el bucle.*/
     if(isEmptyListU(L)) {
         printf("+ Error: Stats not possible\n");
@@ -152,6 +153,23 @@ void stats(tListU L){
                  * categoría.*/
             }
             printf("User %s category %s totalplaytime %d\n",Usuario.userName, changeTypeToChar(Usuario.userCategory), Usuario.totalPlayTime);
+            /*for(u = firstS(Usuario.songList); u <= lastS(Usuario.songList); u = nextS(u,Usuario.songList)){
+                if(isEmptyListS(Usuario.songList)){
+                    printf("No songs");
+                }else{
+                    printf("Song %s playtime %d", getItemS(u, Usuario.songList).songTitle, Usuario.totalPlayTime);
+                }
+            }
+
+            while(u <= lastS(Usuario.songList)){
+                if(isEmptyListS(Usuario.songList)){
+                    printf("No songs");
+                }else{
+                    printf("Song %s playtime %d", getItemS(u, Usuario.songList).songTitle, Usuario.totalPlayTime);
+                }
+                u = nextS(u,Usuario.songList);
+            }
+            */
             /* Imprimimos por pantalla los datos de cada usuario.*/
             i = nextU(i, L);
         }
@@ -189,6 +207,8 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
             break;
         case 'S':
             printf("********************\n");
+            printf("%s %c:\n", commandNumber, command);
+            stats(*L);
             break;
         case 'R':
             printf("********************\n");
