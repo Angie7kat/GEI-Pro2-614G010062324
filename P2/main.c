@@ -16,12 +16,23 @@
 
 #define MAX_BUFFER 255
 
+/* Función auxiliar que nos ayudará a introducir un valor char y pasarlo a enum para asignarlo a tUserCategory.*/
+tUserCategory changeTypeToEnum(char * category){
+    if(strcmp(category,"basic") == 0){
+        return basic;
+        /* En caso de que su valor sea basic, devuelve basic en tipo enum.*/
+    }else{
+        return pro;
+        /* De lo contrario, devuelve pro en tipo enum.*/
+    }
+}
+
 /*    NEW
- * Objetivo: 
- * Entradas: 
- * Salidas:
- * PreCD: 
- * PostCD:
+ * Objetivo: Dar de alta a un usuario basic o pro.
+ * Entradas: La lista de usuarios, el nombre del nuevo usuario, la categoría que tendrá este usuario.
+ * Salidas: La lista con ahora un usuario nuevo.
+ * PreCD: La lista de usuarios debe estar inicializada.
+ * PostCD: Las posiciones de los usuarios pueden haber variado.
  */
 void new(tListU *L, tUserName name, tUserCategory category){
     tItemU item1;
@@ -40,13 +51,21 @@ void new(tListU *L, tUserName name, tUserCategory category){
         printf("+ Error: New not possible\n");
     }
 }
+/*    DELETE
+ * Objetivo: Eliminar un usuario.
+ * Entradas: La lista de usuarios y el usuario a eliminar.
+ * Salidas: La lista con el usuario eliminado.
+ * PreCD: La lista de usuarios debe estar inicializada.
+ * PostCD: Las posiciones de los usuarios pueden haber variado.
+ */
+// función delete
 
 /*    ADD
- * Objetivo: 
- * Entradas: 
- * Salidas:
- * PreCD: 
- * PostCD:
+ * Objetivo: Añadir una nueva canción a la lista de reproducción.
+ * Entradas: La lista de usuarios, el usuario que quiere insertar una nueva canción y el título de esta.
+ * Salidas: La lista en de canciones ha aumentado en un usuario si esta canción no estaba ya en la lista.
+ * PreCD: La lista de usuarios y de canciones debe estar inicializada.
+ * PostCD: Las posiciones de las canciones pueden haber variado.
  */
 void add(tListU *L, tUserName name, tSongTitle song) {
     if(isEmptyListU(*L))
@@ -71,31 +90,74 @@ void add(tListU *L, tUserName name, tSongTitle song) {
         }
     }
 }
+/*    UPGRADE
+ * Objetivo: Actualizar la categoría de un usuario de basic a pro.
+ * Entradas: La lista de usuarios y el nombre del usuario.
+ * Salidas: La lista modificada con la categoría del usuario actualizada.
+ * PreCD: La lista debe de estar inicializada.
+ */
+// función upgrade
 
-void processCommand(char *commandNumber, char command, char *param1, char *param2, char *param3) {
+/*    PLAY
+ * Objetivo:
+ * Entradas:
+ * Salidas:
+ * PreCD:
+ * PostCD:
+ */
+// función play
+
+/*    STATS
+ * Objetivo: Imprimir toda la lista de usuarios de MUSFIC y sus datos.
+ * Entradas: La lista a imprimir.
+ * Salidas: Impresión de la lista.
+ * PreCD: La lista debe estar inicializada.
+ */
+void stats(tListU L){
+
+}
+/*    REMOVE
+ * Objetivo: Eliminar todos los usuarios basic cuyo contador de tiempo de reproducción exceda maxTime minutos.
+ * Entradas: La lista de usuarios y maxTime.
+ * Salidas: La lista sin los usuarios que excedían el maxTime.
+ * PreCD: La lista de usuarios está inicializada.
+ * PostCD: La lista de usuarios puede haber variado.
+ */
+
+void processCommand(char *commandNumber, char command, char *param1, char *param2, char *param3, tListU *L) {
 
     switch (command) {
         case 'N':
-            printf("Command: %s %c %s %s\n", commandNumber, command, param1, param2);
+            printf("********************\n");
+            printf("%s %c: user %s category %s\n", commandNumber, command, param1, param2);
+            new(L,param1, changeTypeToEnum(param2));
             break;
         case 'D':
+            printf("********************\n");
             break;
         case 'A':
+            printf("********************\n");
+            printf("%s %c: user %s song %s\n", commandNumber, command, param1, param2);
+            add(L,param1,param2);
             break;
         case 'U':
+            printf("********************\n");
             break;
         case 'P':
+            printf("********************\n");
             break;
         case 'S':
+            printf("********************\n");
             break;
         case 'R':
+            printf("********************\n");
             break;
         default:
             break;
     }
 }
 
-void readTasks(char *filename) {
+void readTasks(char *filename, tListU *L) {
 
     FILE *f = NULL;
     char *commandNumber, *command, *param1, *param2, *param3;
@@ -113,7 +175,7 @@ void readTasks(char *filename) {
             param2 = strtok(NULL, delimiters);
             param3 = strtok(NULL, delimiters);
 
-            processCommand(commandNumber, command[0], param1, param2, param3);
+            processCommand(commandNumber, command[0], param1, param2, param3, L);
         }
 
         fclose(f);
@@ -132,12 +194,12 @@ int main(int nargs, char **args) {
     if (nargs > 1) {
         file_name = args[1];
     } else {
-        #ifdef INPUT_FILE
+#ifdef INPUT_FILE
         file_name = INPUT_FILE;
-        #endif
+#endif
     }
 
-    readTasks(file_name);
+    readTasks(file_name, &L);
 
     return 0;
 }
