@@ -169,7 +169,7 @@ void stats(tListU L){
             if(isEmptyListS(Usuario.songList)){
                 printf("No songs\n");
             }else {
-                for(u = firstS(Usuario.songList); u <= lastS(Usuario.songList); u = nextS(u,Usuario.songList)){
+                for(u = firstS(Usuario.songList); u != NULLS; u = nextS(u,Usuario.songList)){
                     printf("Song %s playtime %d\n", getItemS(u, Usuario.songList).songTitle, Usuario.totalPlayTime);
                 }
             }
