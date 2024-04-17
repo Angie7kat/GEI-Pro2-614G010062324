@@ -38,6 +38,18 @@ tUserCategory changeTypeToEnum(char * category){
     }
 }
 
+/* Función auxiliar que nos ayudará a calcular el promedio en la función stats ya que los valores a dividir son int
+ * y queremos que sea float.*/
+float average (int category, int plays) {
+    if (category == 0 || plays == 0)
+        return 0;
+        /* Si los valores ingresados son 0, devuelve el valor 0.*/
+    else {
+        return ((float)plays / (float)category);
+        /* De lo contrario devuelve el promedio.*/
+    }
+}
+
 /*    NEW
  * Objetivo: Dar de alta a un usuario basic o pro.
  * Entradas: La lista de usuarios, el nombre del nuevo usuario, la categoría que tendrá este usuario.
@@ -57,7 +69,7 @@ void new(tListU *L, tUserName name, tUserCategory category){
         item1.userCategory = category;
         createEmptyListS(&item1.songList);
         insertItemU(item1, L);
-        printf("* New: user %s category %d\n", name, category);
+        printf("* New: user %s category %s\n", name, changeTypeToChar(category));
     }else{
         printf("+ Error: New not possible\n");
     }
@@ -80,23 +92,24 @@ void new(tListU *L, tUserName name, tUserCategory category){
  */
 void add(tListU *L, tUserName name, tSongTitle song) {
     if(isEmptyListU(*L))
-        printf("+ Error: Add not possible");
-    else if(findItemU(name, *L) != NULLU)
-        printf("+ Error: Add not possible");
+        printf("+ Error: Add not possible\n");
+    else if(findItemU(name, *L) == NULLU)
+        printf("+ Error: Add not possible\n");
     else {
         tItemU usuario = getItemU(findItemU(name, *L), *L);
-        if(isEmptyListS(usuario.songList))
-            printf("+ Error: Add not possible");
-        else if(findItemS(song, usuario.songList) != NULLS)
-            printf("+ Error: Add not possible");
+        if(findItemS(song, usuario.songList) != NULLS)
+            printf("+ Error: Add not possible\n");
         else{
             tItemS item;
             strcpy(item.songTitle, song);
             item.playTime = 0;
             if(!insertItemS(item, NULLS, &usuario.songList))
-                printf("+ Error: Add not possible");
-            else
-                printf("* Add: user %s adds song %s", name, song);
+                printf("+ Error: Add not possible\n");
+            else{
+                updateItemU(usuario,findItemU(name, *L),L);
+                printf("* Add: user %s adds song %s\n", name, song);
+            }
+
 
         }
     }
@@ -133,7 +146,7 @@ void stats(tListU L){
         /* Si la lista está vacía, muestra error.*/
     }
     else {
-        int cntCategory0 = 0, cntCategory1 = 0, cntPlays0 = 0, cntPlays1 = 0;
+        int cntCategory0 = 0, cntCategory1 = 0, cntTotalPlay0 = 0, cntTotalPlay1 = 0;
         /* Si no está vacía, creamos variables para contar los diferentes categorías.*/
         i = firstU(L);
         while (i != NULLU) {
@@ -142,37 +155,33 @@ void stats(tListU L){
             /* Recopilamos los datos del usuario asignado a cada posición.*/
             if(Usuario.userCategory == 0) {
                 cntCategory0++;
-                cntPlays0 += Usuario.totalPlayTime;
+                cntTotalPlay0 += Usuario.totalPlayTime;
                 /* En caso de ser de la categoría basic, añadimos 1 al contador basic y sumamos las reproducciones de
                  * su categoría.*/
             }
             else {
                 cntCategory1++;
-                cntPlays1 += Usuario.totalPlayTime;
+                cntTotalPlay1 += Usuario.totalPlayTime;
                 /* Si pertenece a la categoría pro, añadimos 1 al contador pro y sumamos las reproducciones de su
                  * categoría.*/
             }
             printf("User %s category %s totalplaytime %d\n",Usuario.userName, changeTypeToChar(Usuario.userCategory), Usuario.totalPlayTime);
-            /*for(u = firstS(Usuario.songList); u <= lastS(Usuario.songList); u = nextS(u,Usuario.songList)){
-                if(isEmptyListS(Usuario.songList)){
-                    printf("No songs");
-                }else{
-                    printf("Song %s playtime %d", getItemS(u, Usuario.songList).songTitle, Usuario.totalPlayTime);
+            if(isEmptyListS(Usuario.songList)){
+                printf("No songs\n");
+            }else {
+                for(u = firstS(Usuario.songList); u <= lastS(Usuario.songList); u = nextS(u,Usuario.songList)){
+                    printf("Song %s playtime %d\n", getItemS(u, Usuario.songList).songTitle, Usuario.totalPlayTime);
                 }
             }
-
-            while(u <= lastS(Usuario.songList)){
-                if(isEmptyListS(Usuario.songList)){
-                    printf("No songs");
-                }else{
-                    printf("Song %s playtime %d", getItemS(u, Usuario.songList).songTitle, Usuario.totalPlayTime);
-                }
-                u = nextS(u,Usuario.songList);
-            }
-            */
+            printf("\n");
             /* Imprimimos por pantalla los datos de cada usuario.*/
             i = nextU(i, L);
         }
+        printf("Category  Users  TimePlay  Average\n");
+        printf("Basic     %5d %9d %8.2f\n", cntCategory0, cntTotalPlay0, average(cntCategory0, cntTotalPlay0));
+        printf("Pro       %5d %9d %8.2f\n", cntCategory1, cntTotalPlay1, average(cntCategory1, cntTotalPlay1));
+        /* Finalmente creamos una tabla para mostrar la información de cada categoría con el número de usuarios,
+         * reproducciones y el promedio.*/
     }
 }
 /*    REMOVE
