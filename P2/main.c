@@ -194,7 +194,7 @@ void play(tListU *L, tUserName name, tSongTitle song, tPlayTime tiempo) {
     tPosU pos;
     pos = findItemU(name, *L);
     if(isEmptyListU(*L))
-    printf("+ Error: Play not possible\n");
+        printf("+ Error: Play not possible\n");
     else if (pos == NULLU)
         printf("+ Error: Play not possible\n");
     else {
@@ -274,7 +274,7 @@ void stats(tListU L){
  * PreCD: La lista de usuarios está inicializada.
  * PostCD: La lista de usuarios puede haber variado.
  */
-void removeMain(tListU *L, tPlayTime maxTime){
+void removeU(tListU *L, tPlayTime maxTime){
     tPosU pos;
     if(isEmptyListU(*L)){
         printf("+ Error: Remove not possible\n");
@@ -285,9 +285,19 @@ void removeMain(tListU *L, tPlayTime maxTime){
             if(strcmp(changeTypeToChar(usuario.userCategory), "basic") == 0){
                 if(usuario.totalPlayTime > maxTime){
                     printf("Removing user %s totalplaytime %d\n", usuario.userName, usuario.totalPlayTime);
-                    deleteAtPositionU(pos,L);
-                    // DUDA, TENGO QUE BORRAR TODAS LAS CANCIONES ANTES?
-                    // ES QUE SI USO EL DELETE DEL MAIN SE IMPRIMEN LOS MENSAJES
+                    if(isEmptyListS(usuario.songList)){
+                        deleteAtPositionU(pos,L);
+                    }else{
+                        tPosS u;
+                        for(u = lastS(usuario.songList); u != NULLS; u = previousS(u,usuario.songList)){
+                            deleteAtPositionS(u,&usuario.songList);
+                        }
+                        if(isEmptyListS(usuario.songList)){
+                            deleteAtPositionU(pos, L);
+                        }else{
+                            printf("+ Error: Remove not possible\n");
+                        }
+                    }
                 }
             }else{
                 printf("+ Error: Remove not possible\n");
@@ -332,7 +342,7 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
         case 'R':
             printf("********************\n");
             printf("%s %c: maxtime %s \n", commandNumber, command, param1);
-            removeMain(L,atoi(param3));
+            removeU(L, atoi(param3));
             break;
         default:
             break;
