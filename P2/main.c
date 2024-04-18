@@ -166,29 +166,29 @@ void stats(tListU L){
         i = firstU(L);
         while (i != NULLU){
             /* Creamos un bucle desde la primera posición de la lista hasta la última.*/
-            tItemU Usuario = getItemU(i, L);
+            tItemU usuario = getItemU(i, L);
             /* Recopilamos los datos del usuario asignado a cada posición.*/
-            if(Usuario.userCategory == 0){
+            if(usuario.userCategory == 0){
                 cntCategory0++;
-                cntTotalPlay0 += Usuario.totalPlayTime;
+                cntTotalPlay0 += usuario.totalPlayTime;
                 /* En caso de ser de la categoría basic, añadimos 1 al contador basic y sumamos el totalPlayTime de
                  * su categoría.*/
             }else{
                 cntCategory1++;
-                cntTotalPlay1 += Usuario.totalPlayTime;
+                cntTotalPlay1 += usuario.totalPlayTime;
                 /* Si pertenece a la categoría pro, añadimos 1 al contador pro y sumamos el totalPlayTime de su
                  * categoría.*/
             }
-            printf("User %s category %s totalplaytime %d\n",Usuario.userName, changeTypeToChar(Usuario.userCategory), Usuario.totalPlayTime);
+            printf("User %s category %s totalplaytime %d\n", usuario.userName, changeTypeToChar(usuario.userCategory), usuario.totalPlayTime);
             /* Mostramos la información del usuario por pantalla y ahora nos disponemos a imprimir sus canciones:*/
-            if(isEmptyListS(Usuario.songList)){
+            if(isEmptyListS(usuario.songList)){
                 /* Si la lista de canciones está vacía no hay, imprimimos No songs.*/
                 printf("No songs\n");
             }else{
                 /* Si sí hay canciones, una o varias, debemos recorrer la lista de canciones e ir imprimiendo la
                  * información de cada una.*/
-                for(u = firstS(Usuario.songList); u != NULLS; u = nextS(u,Usuario.songList)){
-                    printf("Song %s playtime %d\n", getItemS(u, Usuario.songList).songTitle, Usuario.totalPlayTime);
+                for(u = firstS(usuario.songList); u != NULLS; u = nextS(u, usuario.songList)){
+                    printf("Song %s playtime %d\n", getItemS(u, usuario.songList).songTitle, usuario.totalPlayTime);
                 }
             }
             printf("\n");
