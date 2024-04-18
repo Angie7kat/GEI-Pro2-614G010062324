@@ -69,7 +69,7 @@ void new(tListU *L, tUserName name, tUserCategory category){
         usuario.userCategory = category;
         createEmptyListS(&usuario.songList);
         /* ... Creamos un tItemU usuario al que le asignaremos toda la información introducida.*/
-        if(insertItemU(usuario, L)) {
+        if(insertItemU(usuario, L)){
             /* Si es insertado en la lista correctamente...*/
             printf("* New: user %s category %s\n", name, changeTypeToChar(category));
             /* ... Mostramos en pantalla sus datos.*/
@@ -95,10 +95,10 @@ void delete(tListU *L, tUserName name) {
 
     if(isEmptyListU(*L)){
         printf("+ Error: Delete not possible\n");
-    }else if(findItemU(name, *L) == NULLU){
+    }else if(pos == NULLU){
         printf("+ Error: Delete not possible\n");
     }else{
-        tItemU usuario = getItemU(findItemU(name, *L), *L);
+        tItemU usuario = getItemU(pos, *L);
         if(isEmptyListS(usuario.songList)){
             deleteAtPositionU(pos, L);
             printf("* Delete: user %s category %s totalplaytime %d\n", name, changeTypeToChar(usuario.userCategory),usuario.totalPlayTime);
@@ -208,9 +208,8 @@ void play(tListU *L, tUserName name, tSongTitle song, tPlayTime tiempo) {
             usuario.totalPlayTime += tiempo;
             updateItemS(cancion, posCancion, &usuario.songList);
             updateItemU(usuario, pos,L);
-            printf("* Play: user %s plays cancion %s playtime %d totalplaytime %d\n", name, song, tiempo, usuario.totalPlayTime);
+            printf("* Play: user %s plays song %s playtime %d totalplaytime %d\n", name, song, tiempo, usuario.totalPlayTime);
         }
-
     }
 }
 
@@ -255,7 +254,7 @@ void stats(tListU L){
                 /* Si sí hay canciones, una o varias, debemos recorrer la lista de canciones e ir imprimiendo la
                  * información de cada una.*/
                 for(u = firstS(usuario.songList); u != NULLS; u = nextS(u, usuario.songList)){
-                    printf("Song %s playtime %d\n", getItemS(u, usuario.songList).songTitle, usuario.totalPlayTime);
+                    printf("Song %s playtime %d\n", getItemS(u, usuario.songList).songTitle, getItemS(u, usuario.songList).playTime);
                 }
             }
             printf("\n");
@@ -269,12 +268,33 @@ void stats(tListU L){
     }
 }
 /*    REMOVE
- * Objetivo: Eliminar todos los usuarios basic cuyo contador de tiempo de reproducción exceda maxTime minutos.
+ * Objetivo: Elimina todos los usuarios basic cuyo contador de tiempo de reproducción exceda maxTime minutos.
  * Entradas: La lista de usuarios y maxTime.
  * Salidas: La lista sin los usuarios que excedían el maxTime.
  * PreCD: La lista de usuarios está inicializada.
  * PostCD: La lista de usuarios puede haber variado.
  */
+void removeMain(tListU *L, tPlayTime maxTime){
+    tPosU pos;
+    if(isEmptyListU(*L)){
+        printf("+ Error: Remove not possible\n");
+    }else{
+        tItemU usuario;
+        for(pos = *L; pos != NULLU; pos = pos -> next){
+            usuario = getItemU(pos,*L);
+            if(strcmp(changeTypeToChar(usuario.userCategory), "basic") == 0){
+                if(usuario.totalPlayTime > maxTime){
+                    printf("Removing user %s totalplaytime %d\n", usuario.userName, usuario.totalPlayTime);
+                    deleteAtPositionU(pos,L);
+                    // DUDA, TENGO QUE BORRAR TODAS LAS CANCIONES ANTES?
+                    // ES QUE SI USO EL DELETE DEL MAIN SE IMPRIMEN LOS MENSAJES
+                }
+            }else{
+                printf("+ Error: Remove not possible\n");
+            }
+        }
+    }
+}
 
 void processCommand(char *commandNumber, char command, char *param1, char *param2, char *param3, tListU *L) {
 
@@ -311,6 +331,8 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
             break;
         case 'R':
             printf("********************\n");
+            printf("%s %c: maxtime %s \n", commandNumber, command, param1);
+            removeMain(L,atoi(param3));
             break;
         default:
             break;
