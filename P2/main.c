@@ -89,7 +89,33 @@ void new(tListU *L, tUserName name, tUserCategory category){
  * PreCD: La lista de usuarios debe estar inicializada.
  * PostCD: Las posiciones de los usuarios pueden haber variado.
  */
-// función delete
+void delete(tListU *L, tUserName name) {
+    tPosU pos;
+    pos = findItemU(name, *L);
+
+    if(isEmptyListU(*L)){
+        printf("+ Error: Delete not possible\n");
+    }else if(findItemU(name, *L) == NULLU){
+        printf("+ Error: Delete not possible\n");
+    }else{
+        tItemU usuario = getItemU(findItemU(name, *L), *L);
+        if(isEmptyListS(usuario.songList)){
+            deleteAtPositionU(pos, L);
+            printf("* Delete: user %s category %s totalplaytime %d\n", name, changeTypeToChar(usuario.userCategory),usuario.totalPlayTime);
+        }else{
+            tPosS u;
+            for(u = lastS(usuario.songList); u != NULLS; u = previousS(u,usuario.songList)){
+                deleteAtPositionS(u,&usuario.songList);
+            }
+            if(isEmptyListS(usuario.songList)){
+                deleteAtPositionU(pos, L);
+                printf("* Delete: user %s category %s totalplaytime %d\n", name, changeTypeToChar(usuario.userCategory),usuario.totalPlayTime);
+            }else{
+                printf("+ Error: Delete not possible\n");
+            }
+        }
+    }
+}
 
 /*    ADD
  * Objetivo: Añadir una nueva canción a la lista de reproducción.
@@ -219,6 +245,8 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
             break;
         case 'D':
             printf("********************\n");
+            printf("%s %c: user %s \n", commandNumber, command, param1);
+            delete(L,param1);
             break;
         case 'A':
             printf("********************\n");
