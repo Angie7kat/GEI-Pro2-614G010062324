@@ -171,21 +171,27 @@ void add(tListU *L, tUserName name, tSongTitle song){
  * PreCD:
  * PostCD:
  */
-void play(tListU *L, tUserName name, tSongTitle cancion, tPlayTime tiempo) {
+void play(tListU *L, tUserName name, tSongTitle song, tPlayTime tiempo) {
     tPosU pos;
     pos = findItemU(name, *L);
-    if(isEmptyListU(*L)))
-        printf("+ Error: Play not possible\n");
+    if(isEmptyListU(*L))
+    printf("+ Error: Play not possible\n");
     else if (pos == NULLU)
         printf("+ Error: Play not possible\n");
     else {
+        tItemU usuario = getItemU(pos, *L);
+        tPosS posCancion = findItemS(song, usuario.songList);
+        if(posCancion == NULLS)
+            printf("+ Error: Play not possible\n");
+        else{
+            tItemS cancion = getItemS(posCancion, usuario.songList);
+            cancion.playTime = tiempo;
+            usuario.totalPlayTime += tiempo;
+            updateItemS(cancion, posCancion, &usuario.songList);
+            updateItemU(usuario, pos,L);
+            printf("* Play: user %s plays cancion %s playtime %d totalplaytime %d\n", name, song, tiempo, usuario.totalPlayTime);
+        }
 
-        tItemS song = getItemS(findItemS(cancion, usuario.songList), usuario.songList);
-        song.playTime = tiempo;
-        usuario.totalPlayTime += tiempo;
-        updateItemS(song, findItemS(cancion,usuario.songList),&usuario.songList);
-        updateItemU(usuario, findItemU(name,*L),L);
-        printf("* Play: user %s plays song %s playtime %d totalplaytime %d\n", name, cancion, tiempo, usuario.totalPlayTime);
     }
 }
 
