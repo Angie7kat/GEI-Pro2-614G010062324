@@ -171,7 +171,23 @@ void add(tListU *L, tUserName name, tSongTitle song){
  * PreCD:
  * PostCD:
  */
-// función play
+void play(tListU *L, tUserName name, tSongTitle cancion, tPlayTime tiempo) {
+    tPosU pos;
+    pos = findItemU(name, *L);
+    if(isEmptyListU(*L)))
+        printf("+ Error: Play not possible\n");
+    else if (pos == NULLU)
+        printf("+ Error: Play not possible\n");
+    else {
+
+        tItemS song = getItemS(findItemS(cancion, usuario.songList), usuario.songList);
+        song.playTime = tiempo;
+        usuario.totalPlayTime += tiempo;
+        updateItemS(song, findItemS(cancion,usuario.songList),&usuario.songList);
+        updateItemU(usuario, findItemU(name,*L),L);
+        printf("* Play: user %s plays song %s playtime %d totalplaytime %d\n", name, cancion, tiempo, usuario.totalPlayTime);
+    }
+}
 
 /*    STATS
  * Objetivo: Imprimir toda la lista de usuarios de MUSFIC y sus datos.
@@ -258,6 +274,8 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
             break;
         case 'P':
             printf("********************\n");
+            printf("%s %c: user %s song %s minutes %s\n", commandNumber, command, param1, param2, param3);
+            play(L, param1, param2, atoi(param3));
             break;
         case 'S':
             printf("********************\n");
