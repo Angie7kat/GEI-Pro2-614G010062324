@@ -162,7 +162,26 @@ void add(tListU *L, tUserName name, tSongTitle song){
  * Salidas: La lista modificada con la categoría del usuario actualizada.
  * PreCD: La lista debe de estar inicializada.
  */
-// función upgrade
+void upgrade(tListU *L, tUserName name){
+    tPosU pos;
+    pos = findItemU(name, *L);
+    if(isEmptyListU(*L)){
+        printf("+ Error: Upgrade not possible\n");
+        /* En caso de que la lista esté vacía, devuelve error.*/
+    }else if(pos == NULLU){
+        printf("+ Error: Upgrade not possible\n");
+        /* Si la lista no está vacía, pero el usuario no existe, también da error.*/
+    }else{
+        tItemU usuario = getItemU(pos,*L);
+        if(strcmp(changeTypeToChar(usuario.userCategory), "pro") == 0){
+            printf("+ Error: Upgrade not possible\n");
+        }else{
+            usuario.userCategory = changeTypeToEnum("pro");
+            updateItemU(usuario, pos, L);
+            printf("* Upgrade: user %s category %s\n", name, changeTypeToChar(usuario.userCategory));
+        }
+    }
+}
 
 /*    PLAY
  * Objetivo:
@@ -277,6 +296,8 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
             break;
         case 'U':
             printf("********************\n");
+            printf("%s %c: user %s\n", commandNumber, command, param1);
+            upgrade(L,param1);
             break;
         case 'P':
             printf("********************\n");
