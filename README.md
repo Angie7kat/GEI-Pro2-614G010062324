@@ -1,6 +1,7 @@
 # PRO2-2324
 ## NOTAS DE LAS PRÁCTICAS<br>
 P1 : 1,35/2<br>
+Errores p1: No filtrar que el findItem pueda dar false(grave), no comentar las funciones del main(objetivos, entradas, salidas)<br>
 P2: <br>
 Abril : 12, 19 26 entregas<br>
 
