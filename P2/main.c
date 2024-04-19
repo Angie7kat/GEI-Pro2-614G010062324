@@ -280,7 +280,7 @@ void removeU(tListU *L, tPlayTime maxTime){
         printf("+ Error: Remove not possible\n");
     }else{
         tItemU usuario;
-        for(pos = first(*L); pos != NULLU; pos = next(pos,*L){
+        for(pos = firstU(*L); pos != NULLU; pos = nextU(pos,*L)){
             usuario = getItemU(pos,*L);
             if(strcmp(changeTypeToChar(usuario.userCategory), "basic") == 0){
                 if(usuario.totalPlayTime > maxTime){
@@ -299,7 +299,6 @@ void removeU(tListU *L, tPlayTime maxTime){
                         }
                     }
                 }
-            }
             }
         }
     }
@@ -341,7 +340,7 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
         case 'R':
             printf("********************\n");
             printf("%s %c: maxtime %s \n", commandNumber, command, param1);
-            removeU(L, atoi(param3));
+            removeU(L, atoi(param1));
             break;
         default:
             break;
