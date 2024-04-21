@@ -60,7 +60,7 @@ float average (int category, int plays){
 void new(tListU *L, tUserName name, tUserCategory category){
     tPosU pos;
     pos = findItemU(name, *L);
-    /* Creamos una variable auxiliar tPosU para comprobar si el usuario ya está en la lista.*/
+    /* Creamos una variable auxiliar tPosU para buscar si el usuario ya está en la lista.*/
     if(pos == NULLU){
         /* Si no está en la lista entonces...*/
         tItemU usuario;
@@ -92,25 +92,40 @@ void new(tListU *L, tUserName name, tUserCategory category){
 void delete(tListU *L, tUserName name) {
     tPosU pos;
     pos = findItemU(name, *L);
-
+    /* Creamos una variable auxiliar para buscar el usuario que queremos eliminar.*/
     if(isEmptyListU(*L)){
+        /* Si la lista está vacía no hay ningún usuario que borrar entonces devolvemos un error.*/
         printf("+ Error: Delete not possible\n");
     }else if(pos == NULLU){
+        /* Si el usuario a eliminar no está en la lista o findItem no lo encuentra devolvemos error.*/
         printf("+ Error: Delete not possible\n");
     }else{
-        tItemU usuario = getItemU(pos, *L);
+        /* Si sí está en la lista, comenzamos con el proceso de eliminación.*/
+        tItemU usuario;
+        usuario = getItemU(pos, *L);
+        /* Utilizamos un tItemU usuario para almacenar la información del usuario a eliminar.
+         * Según las precondiciones de deleteAtPositionU para borrar un usuario esta función debe recibir usuario con
+         * la lista de canciones vacía por lo que procedemos a hacer las comprobaciones necesarias.*/
         if(isEmptyListS(usuario.songList)){
+            /* Si la lista de canciones ya está vacía podemos utilizar deleteAtPositionU sin problema y eliminar el
+             * usuario.*/
             deleteAtPositionU(pos, L);
             printf("* Delete: user %s category %s totalplaytime %d\n", name, changeTypeToChar(usuario.userCategory),usuario.totalPlayTime);
+            /* Imprimimos los datos del usuario eliminado.*/
         }else{
+            /* Si la lista de canciones no está vacía debemos vaciarla.*/
             tPosS u;
+            /* Hacemos un bucle que desde la última canción hasta la primera va vaciando la lista de canciones.*/
             for(u = lastS(usuario.songList); u != NULLS; u = previousS(u,usuario.songList)){
                 deleteAtPositionS(u,&usuario.songList);
             }
+            /* Comprobamos si se ha vaciado bien la lista de canciones.*/
             if(isEmptyListS(usuario.songList)){
+                /* Si se ha vaciado correctamente borramos el usuario e imprimimos su información.*/
                 deleteAtPositionU(pos, L);
                 printf("* Delete: user %s category %s totalplaytime %d\n", name, changeTypeToChar(usuario.userCategory),usuario.totalPlayTime);
             }else{
+                /* Si la lista de canciones no se ha vaciado correctamente enseñamos un error.*/
                 printf("+ Error: Delete not possible\n");
             }
         }
@@ -120,19 +135,22 @@ void delete(tListU *L, tUserName name) {
 /*    ADD
  * Objetivo: Añadir una nueva canción a la lista de reproducción.
  * Entradas: La lista de usuarios, el usuario que quiere insertar una nueva canción y el título de esta.
- * Salidas: La lista en de canciones ha aumentado en un usuario si esta canción no estaba ya en la lista.
+ * Salidas: La lista de canciones aumentará en un usuario si esta canción no estaba ya en la lista.
  * PreCD: La lista de usuarios y de canciones debe estar inicializada.
  * PostCD: Las posiciones de las canciones pueden haber variado.
  */
 void add(tListU *L, tUserName name, tSongTitle song){
-    /* Si la lista no tiene ningún usuario no podemos añadir la canción a ningún usuario.*/
+    tPosU pos;
+    pos = findItemU(name, *L);
+    /* Creamos una variable auxiliar para encontrar el usuario sobre el que se quiere añadir la canción.*/
     if(isEmptyListU(*L)){
+        /* Si la lista no tiene ningún usuario no podemos añadir la canción a ningún usuario, devolvemos un error.*/
         printf("+ Error: Add not possible\n");
-    }else if(findItemU(name, *L) == NULLU){
+    }else if(pos == NULLU){
         /* Si no encuentra el usuario donde se quiere aumentar la lista de canciones devuelve error.*/
         printf("+ Error: Add not possible\n");
     }else{
-        tItemU usuario = getItemU(findItemU(name, *L), *L);
+        tItemU usuario = getItemU(pos, *L);
         /* Una vez pasados los filtros usaremos un tItemU para obtener todos los datos del usuario que quiere introducir
          * la canción y miraremos si la canción ya está añadida o no.*/
         if(findItemS(song, usuario.songList) != NULLS){
@@ -148,7 +166,7 @@ void add(tListU *L, tUserName name, tSongTitle song){
                 /* Si no es capaz de insertarla devolvemos un error.*/
                 printf("+ Error: Add not possible\n");
             }else{
-                updateItemU(usuario,findItemU(name, *L),L);
+                updateItemU(usuario,pos,L);
                 /* Si ha sido insertada correctamente actualizamos el usuario, ya que hemos insertado una nueva canción
                  * en la lista de canciones de un usuario y mostraremos por pantalla el usuario y la canción añadida.*/
                 printf("* Add: user %s adds song %s\n", name, song);
@@ -165,6 +183,7 @@ void add(tListU *L, tUserName name, tSongTitle song){
 void upgrade(tListU *L, tUserName name){
     tPosU pos;
     pos = findItemU(name, *L);
+    /* Creamos una variable auxiliar para buscar el usuario sobre el que se quiere hacer el upgrade.*/
     if(isEmptyListU(*L)){
         printf("+ Error: Upgrade not possible\n");
         /* En caso de que la lista esté vacía, devuelve error.*/
@@ -172,10 +191,14 @@ void upgrade(tListU *L, tUserName name){
         printf("+ Error: Upgrade not possible\n");
         /* Si la lista no está vacía, pero el usuario no existe, también da error.*/
     }else{
+        /* Si hemos pasado todos los filtros obtenemos el usuario en un tItemU.*/
         tItemU usuario = getItemU(pos,*L);
         if(strcmp(changeTypeToChar(usuario.userCategory), "pro") == 0){
+            /* Si el usuario ya es de categoría pro no podemos actualizarlo entonces damos un error.*/
             printf("+ Error: Upgrade not possible\n");
         }else{
+            /* Si es de categoría basic entonces actualizamos su información e imprimimos los nuevos datos con el
+             * upgrade hecho.*/
             usuario.userCategory = changeTypeToEnum("pro");
             updateItemU(usuario, pos, L);
             printf("* Upgrade: user %s category %s\n", name, changeTypeToChar(usuario.userCategory));
@@ -184,26 +207,37 @@ void upgrade(tListU *L, tUserName name){
 }
 
 /*    PLAY
- * Objetivo:
- * Entradas:
- * Salidas:
- * PreCD:
- * PostCD:
+ * Objetivo: Añadir los minutos de una canción a un usuario.
+ * Entradas: La lista de usuarios, el usuario sobre el que se quiere actualizar el tiempo, el titulo de la canción y el tiempo que tiene dicha canción.
+ * Salidas: La lista modificada con unos nuevos tiempos de reproducción.
+ * PreCD: La lista de usuarios debe estar inicializada.
  */
 void play(tListU *L, tUserName name, tSongTitle song, tPlayTime tiempo) {
     tPosU pos;
     pos = findItemU(name, *L);
+    /* Creamos una variable auxiliar para comprobar si existe el usuario.*/
     if(isEmptyListU(*L))
+        /* Si la lista de usuarios está vacía devolvemos un error.*/
         printf("+ Error: Play not possible\n");
     else if (pos == NULLU)
+        /* Si no se ha encontrado el usuario en la lista también devolvemos un error.*/
         printf("+ Error: Play not possible\n");
     else {
-        tItemU usuario = getItemU(pos, *L);
-        tPosS posCancion = findItemS(song, usuario.songList);
+        /* Si no se cumple ninguna de las anteriores condiciones.*/
+        tItemU usuario;
+        usuario = getItemU(pos, *L);
+        tPosS posCancion;
+        posCancion = findItemS(song, usuario.songList);
+        /* Almacenamos el usuario en un tItemU usuario y buscamos la posición de la canción a la que aumentarle el
+         * tiempo de reproducción en la lista de canciones de este usuario.*/
         if(posCancion == NULLS)
+            /* Si no hemos encontrado la canción devolvemos un error.*/
             printf("+ Error: Play not possible\n");
         else{
-            tItemS cancion = getItemS(posCancion, usuario.songList);
+            /* Si la canción si está en la lista entonces actualizamos el tiempo de reproducción de la canción pero
+             * también el tiempo total de reproducción del usuario.*/
+            tItemS cancion;
+            cancion = getItemS(posCancion, usuario.songList);
             cancion.playTime = tiempo;
             usuario.totalPlayTime += tiempo;
             updateItemS(cancion, posCancion, &usuario.songList);
@@ -230,7 +264,7 @@ void stats(tListU L){
         int cntCategory0 = 0, cntCategory1 = 0, cntTotalPlay0 = 0, cntTotalPlay1 = 0;
         /* Si no está vacía, creamos variables para contar los diferentes categorías.*/
         i = firstU(L);
-        while (i != NULLU){
+        while(i != NULLU){
             /* Creamos un bucle desde la primera posición de la lista hasta la última.*/
             tItemU usuario = getItemU(i, L);
             /* Recopilamos los datos del usuario asignado a cada posición.*/
@@ -276,27 +310,39 @@ void stats(tListU L){
  */
 void removeU(tListU *L, tPlayTime maxTime){
     tPosU pos;
+    /* Creamos una variable auxiliar para recorrer las listas y buscar los usuarios a eliminar.*/
     if(isEmptyListU(*L)){
         printf("+ Error: Remove not possible\n");
+        /* Si la lista de canciones está vacía devolvemos un error.*/
     }else{
         tItemU usuario;
+        /* Creamos un tItemU para ir guardando cada usuario de cada posición e ir mirando si pasa las condiciones
+         * necesarias para ser eliminado.*/
         for(pos = firstU(*L); pos != NULLU; pos = nextU(pos,*L)){
             usuario = getItemU(pos,*L);
-            if(strcmp(changeTypeToChar(usuario.userCategory), "basic") == 0){
-                if(usuario.totalPlayTime > maxTime){
+            /* Vamos obteniendo cada usuario de la lista y comprobamos si pasa los requerimientos para ser eliminado.*/
+            if(strcmp(changeTypeToChar(usuario.userCategory), "basic") == 0 && usuario.totalPlayTime > maxTime){
+                /* Si pasa las condiciones procedemos a eliminar el usuario y para ello primero debemos vaciar la lista
+                 * de canciones del usuario.*/
+                if(isEmptyListS(usuario.songList)){
+                    /* Si el usuario ya tiene la lista de canciones vacías procedemos a eliminarlo directamente.*/
                     printf("Removing user %s totalplaytime %d\n", usuario.userName, usuario.totalPlayTime);
+                    deleteAtPositionU(pos,L);
+                }else{
+                    /* Si no está vacía la lista de canciones procedemos a vaciarla.*/
+                    tPosS u;
+                    /* Hacemos un bucle que desde la última canción hasta la primera va vaciando la lista de canciones.*/
+                    for(u = lastS(usuario.songList); u != NULLS; u = previousS(u,usuario.songList)){
+                        deleteAtPositionS(u,&usuario.songList);
+                    }
+                    /* Comprobamos si se ha vaciado bien la lista de canciones.*/
                     if(isEmptyListS(usuario.songList)){
-                        deleteAtPositionU(pos,L);
+                        /* Si se ha vaciado bien eliminamos el usuario.*/
+                        printf("Removing user %s totalplaytime %d\n", usuario.userName, usuario.totalPlayTime);
+                        deleteAtPositionU(pos, L);
                     }else{
-                        tPosS u;
-                        for(u = lastS(usuario.songList); u != NULLS; u = previousS(u,usuario.songList)){
-                            deleteAtPositionS(u,&usuario.songList);
-                        }
-                        if(isEmptyListS(usuario.songList)){
-                            deleteAtPositionU(pos, L);
-                        }else{
-                            printf("+ Error: Remove not possible\n");
-                        }
+                        /* Si no damos un error.*/
+                        printf("+ Error: Remove not possible\n");
                     }
                 }
             }
