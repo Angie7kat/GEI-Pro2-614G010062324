@@ -114,10 +114,13 @@ void delete(tListU *L, tUserName name) {
             /* Imprimimos los datos del usuario eliminado.*/
         }else{
             /* Si la lista de canciones no está vacía debemos vaciarla.*/
-            tPosS u;
+            tPosS u,aux;
             /* Hacemos un bucle que desde la última canción hasta la primera va vaciando la lista de canciones.*/
-            for(u = lastS(usuario.songList); u != NULLS; u = previousS(u,usuario.songList)){
+            u = lastS(usuario.songList);
+            while(u != NULLS){
+                aux = previousS(u,usuario.songList);
                 deleteAtPositionS(u,&usuario.songList);
+                u = aux;
             }
             updateItemU(usuario,pos, L);
             /* Actualizamos y comprobamos si se ha vaciado bien la lista de canciones.*/
@@ -346,10 +349,13 @@ void removeU(tListU *L, tPlayTime maxTime){
                     }
                 }else{
                     /* Si no está vacía la lista de canciones procedemos a vaciarla.*/
-                    tPosS u;
+                    tPosS u, aux;
                     /* Hacemos un bucle que desde la última canción hasta la primera va vaciando la lista de canciones.*/
-                    for(u = lastS(usuario.songList); u != NULLS; u = previousS(u,usuario.songList)){
+                    u = lastS(usuario.songList);
+                    while(u != NULLS){
+                        aux = previousS(u,usuario.songList);
                         deleteAtPositionS(u,&usuario.songList);
+                        u = aux;
                     }
                     updateItemU(usuario, pos, L);
                     /* Actualizamos y comprobamos si se ha vaciado bien la lista de canciones.*/
