@@ -1,10 +1,11 @@
+
 /*
  * TITLE: PROGRAMMING II LABS
  * SUBTITLE: Practical 2
  * AUTHOR 1: Ángela Fouz Suárez LOGIN 1: angela.fouz
  * AUTHOR 2: Nolan Duteil       LOGIN 2: nolan.duteil
  * GROUP: 3.1
- * DATE: 18 / 04 / 2024
+ * DATE: 25 / 04 / 2024
  */
 
 #include <stdio.h>
@@ -311,7 +312,8 @@ void stats(tListU L){
 void removeU(tListU *L, tPlayTime maxTime){
     tPosU pos;
     tPosU pos_aux;
-    /* Creamos una variable auxiliar para recorrer las listas y buscar los usuarios a eliminar.*/
+    /* Creamos una variable auxiliar para recorrer las listas y buscar los usuarios a eliminar y  otra auxiliar para
+     * guardar la posición anterior. */
     if(isEmptyListU(*L)){
         printf("+ Error: Remove not possible\n");
         /* Si la lista de canciones está vacía devolvemos un error.*/
@@ -330,12 +332,17 @@ void removeU(tListU *L, tPlayTime maxTime){
                     /* Si el usuario ya tiene la lista de canciones vacías procedemos a eliminarlo directamente.*/
                     printf("Removing user %s totalplaytime %d\n", usuario.userName, usuario.totalPlayTime);
                     if(pos == *L){
-                    deleteAtPositionU(pos,L);
-                    pos = *L;
+                        deleteAtPositionU(pos,L);
+                        pos = *L;
+                        /* En caso de que la posición sea la primera de la lista, eliminamos el usuario y le
+                        * asignamos a pos la primera posición de la lista. */
                     }else{
                         pos_aux = previousU(pos, *L);
                         deleteAtPositionU(pos,L);
                         pos = pos_aux;
+                        /* En caso de que la posición no sea la primera, creamos una variable para almacenar la
+                        * posición anterior al usuario, eliminamos el usuario e igualamos pos a la variable 
+                        * creada. */
                     }
                 }else{
                     /* Si no está vacía la lista de canciones procedemos a vaciarla.*/
@@ -351,10 +358,15 @@ void removeU(tListU *L, tPlayTime maxTime){
                         if(pos == *L){
                             deleteAtPositionU(pos,L);
                             pos = *L;
+                            /* En caso de que la posición sea la primera de la lista, eliminamos el usuario y le
+                             * asignamos a pos la primera posición de la lista. */
                         }else{
                             pos_aux = previousU(pos, *L);
                             deleteAtPositionU(pos,L);
                             pos = pos_aux;
+                            /* En caso de que la posición no sea la primera, creamos una variable para almacenar la
+                             * posición anterior al usuario, eliminamos el usuario e igualamos pos a la variable 
+                             * creada. */
                         }
                     }else{
                         /* Si no damos un error.*/
@@ -363,6 +375,7 @@ void removeU(tListU *L, tPlayTime maxTime){
                 }
             }else{
                 pos = nextU(pos,*L);
+                /* En caso de que no cumpla los requisitos, pasamos a la siguiente posición. */
             }
         }
     }
