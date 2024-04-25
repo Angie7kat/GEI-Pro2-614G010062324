@@ -315,6 +315,7 @@ void stats(tListU L){
 void removeU(tListU *L, tPlayTime maxTime){
     tPosU pos;
     tPosU pos_aux;
+    bool eliminado = false;
     /* Creamos una variable auxiliar para recorrer las listas y buscar los usuarios a eliminar y  otra auxiliar para
      * guardar la posición anterior. */
     if(isEmptyListU(*L)){
@@ -337,11 +338,13 @@ void removeU(tListU *L, tPlayTime maxTime){
                     if(pos == *L){
                         deleteAtPositionU(pos,L);
                         pos = *L;
+                        eliminado = true;
                         /* En caso de que la posición sea la primera de la lista, eliminamos el usuario y le
                         * asignamos a pos la primera posición de la lista. */
                     }else{
                         pos_aux = previousU(pos, *L);
                         deleteAtPositionU(pos,L);
+                        eliminado = true;
                         pos = pos_aux;
                         /* En caso de que la posición no sea la primera, creamos una variable para almacenar la
                         * posición anterior al usuario, eliminamos el usuario e igualamos pos a la variable
@@ -349,13 +352,12 @@ void removeU(tListU *L, tPlayTime maxTime){
                     }
                 }else{
                     /* Si no está vacía la lista de canciones procedemos a vaciarla.*/
-                    tPosS u, aux;
+                    tPosS u;
                     /* Hacemos un bucle que desde la última canción hasta la primera va vaciando la lista de canciones.*/
                     u = lastS(usuario.songList);
                     while(u != NULLS){
-                        aux = previousS(u,usuario.songList);
                         deleteAtPositionS(u,&usuario.songList);
-                        u = aux;
+                        u = lastS(usuario.songList);
                     }
                     updateItemU(usuario, pos, L);
                     /* Actualizamos y comprobamos si se ha vaciado bien la lista de canciones.*/
@@ -370,6 +372,7 @@ void removeU(tListU *L, tPlayTime maxTime){
                         }else{
                             pos_aux = previousU(pos, *L);
                             deleteAtPositionU(pos,L);
+                            eliminado = true;
                             pos = pos_aux;
                             /* En caso de que la posición no sea la primera, creamos una variable para almacenar la
                              * posición anterior al usuario, eliminamos el usuario e igualamos pos a la variable
@@ -386,6 +389,8 @@ void removeU(tListU *L, tPlayTime maxTime){
             }
         }
     }
+    if(!eliminado)
+        printf("+ Error: Remove not possible\n");
 }
 
 void processCommand(char *commandNumber, char command, char *param1, char *param2, char *param3, tListU *L) {
