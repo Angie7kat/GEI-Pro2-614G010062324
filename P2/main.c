@@ -315,9 +315,11 @@ void stats(tListU L){
 void removeU(tListU *L, tPlayTime maxTime){
     tPosU pos;
     tPosU pos_aux;
-    bool eliminado = false;
-    /* Creamos una variable auxiliar para recorrer las listas y buscar los usuarios a eliminar y  otra auxiliar para
+    /* Creamos una variable auxiliar para recorrer las listas y buscar los usuarios a eliminar y otra auxiliar para
      * guardar la posición anterior. */
+    bool eliminado = false;
+    /* Variable que nos ayudará a saber si se ha eliminado algo para poder imprimir el mensaje de error si no ha
+     * habido nada que eliminar.*/
     if(isEmptyListU(*L)){
         printf("+ Error: Remove not possible\n");
         /* Si la lista de canciones está vacía devolvemos un error.*/
@@ -389,6 +391,7 @@ void removeU(tListU *L, tPlayTime maxTime){
             }
         }
     }
+    /* Si no hemos eliminado nada, mensaje de error.*/
     if(!eliminado)
         printf("+ Error: Remove not possible\n");
 }
