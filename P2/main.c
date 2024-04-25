@@ -367,6 +367,7 @@ void removeU(tListU *L, tPlayTime maxTime){
                         printf("Removing user %s totalplaytime %d\n", usuario.userName, usuario.totalPlayTime);
                         if(pos == *L){
                             deleteAtPositionU(pos,L);
+                            eliminado = true;
                             pos = *L;
                             /* En caso de que la posición sea la primera de la lista, eliminamos el usuario y le
                              * asignamos a pos la primera posición de la lista. */
@@ -389,10 +390,10 @@ void removeU(tListU *L, tPlayTime maxTime){
                 /* En caso de que no cumpla los requisitos, pasamos a la siguiente posición. */
             }
         }
+        /* Si no hemos eliminado nada, mensaje de error.*/
+        if(!eliminado)
+            printf("+ Error: Remove not possible\n");
     }
-    /* Si no hemos eliminado nada, mensaje de error.*/
-    if(!eliminado)
-        printf("+ Error: Remove not possible\n");
 }
 
 void processCommand(char *commandNumber, char command, char *param1, char *param2, char *param3, tListU *L) {
