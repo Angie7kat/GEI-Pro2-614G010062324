@@ -1,4 +1,3 @@
-
 /*
  * TITLE: PROGRAMMING II LABS
  * SUBTITLE: Practical 2
@@ -41,7 +40,7 @@ tUserCategory changeTypeToEnum(char * category){
 
 /* Función auxiliar que nos ayudará a calcular el promedio en la función stats ya que los valores a dividir son int
  * y queremos que sea float.*/
-float average (int category, int plays){
+float average(int category, int plays){
     if(category == 0 || plays == 0)
         return 0;
         /* Si los valores ingresados son 0, devuelve el valor 0.*/
@@ -120,7 +119,8 @@ void delete(tListU *L, tUserName name) {
             for(u = lastS(usuario.songList); u != NULLS; u = previousS(u,usuario.songList)){
                 deleteAtPositionS(u,&usuario.songList);
             }
-            /* Comprobamos si se ha vaciado bien la lista de canciones.*/
+            updateItemU(usuario,pos, L);
+            /* Actualizamos y comprobamos si se ha vaciado bien la lista de canciones.*/
             if(isEmptyListS(usuario.songList)){
                 /* Si se ha vaciado correctamente borramos el usuario e imprimimos su información.*/
                 deleteAtPositionU(pos, L);
@@ -220,10 +220,10 @@ void play(tListU *L, tUserName name, tSongTitle song, tPlayTime tiempo) {
     if(isEmptyListU(*L))
         /* Si la lista de usuarios está vacía devolvemos un error.*/
         printf("+ Error: Play not possible\n");
-    else if (pos == NULLU)
+    else if(pos == NULLU)
         /* Si no se ha encontrado el usuario en la lista también devolvemos un error.*/
         printf("+ Error: Play not possible\n");
-    else {
+    else{
         /* Si no se cumple ninguna de las anteriores condiciones.*/
         tItemU usuario;
         usuario = getItemU(pos, *L);
@@ -341,7 +341,7 @@ void removeU(tListU *L, tPlayTime maxTime){
                         deleteAtPositionU(pos,L);
                         pos = pos_aux;
                         /* En caso de que la posición no sea la primera, creamos una variable para almacenar la
-                        * posición anterior al usuario, eliminamos el usuario e igualamos pos a la variable 
+                        * posición anterior al usuario, eliminamos el usuario e igualamos pos a la variable
                         * creada. */
                     }
                 }else{
@@ -351,7 +351,8 @@ void removeU(tListU *L, tPlayTime maxTime){
                     for(u = lastS(usuario.songList); u != NULLS; u = previousS(u,usuario.songList)){
                         deleteAtPositionS(u,&usuario.songList);
                     }
-                    /* Comprobamos si se ha vaciado bien la lista de canciones.*/
+                    updateItemU(usuario, pos, L);
+                    /* Actualizamos y comprobamos si se ha vaciado bien la lista de canciones.*/
                     if(isEmptyListS(usuario.songList)){
                         /* Si se ha vaciado bien eliminamos el usuario.*/
                         printf("Removing user %s totalplaytime %d\n", usuario.userName, usuario.totalPlayTime);
@@ -365,7 +366,7 @@ void removeU(tListU *L, tPlayTime maxTime){
                             deleteAtPositionU(pos,L);
                             pos = pos_aux;
                             /* En caso de que la posición no sea la primera, creamos una variable para almacenar la
-                             * posición anterior al usuario, eliminamos el usuario e igualamos pos a la variable 
+                             * posición anterior al usuario, eliminamos el usuario e igualamos pos a la variable
                              * creada. */
                         }
                     }else{
