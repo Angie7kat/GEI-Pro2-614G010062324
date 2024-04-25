@@ -310,6 +310,7 @@ void stats(tListU L){
  */
 void removeU(tListU *L, tPlayTime maxTime){
     tPosU pos;
+    tPosU pos_aux;
     /* Creamos una variable auxiliar para recorrer las listas y buscar los usuarios a eliminar.*/
     if(isEmptyListU(*L)){
         printf("+ Error: Remove not possible\n");
@@ -318,7 +319,8 @@ void removeU(tListU *L, tPlayTime maxTime){
         tItemU usuario;
         /* Creamos un tItemU para ir guardando cada usuario de cada posición e ir mirando si pasa las condiciones
          * necesarias para ser eliminado.*/
-        for(pos = firstU(*L); pos != NULLU; pos = nextU(pos,*L)){
+        pos = firstU(*L);
+        while(pos != NULLU ){
             usuario = getItemU(pos,*L);
             /* Vamos obteniendo cada usuario de la lista y comprobamos si pasa los requerimientos para ser eliminado.*/
             if(strcmp(changeTypeToChar(usuario.userCategory), "basic") == 0 && usuario.totalPlayTime > maxTime){
@@ -327,7 +329,14 @@ void removeU(tListU *L, tPlayTime maxTime){
                 if(isEmptyListS(usuario.songList)){
                     /* Si el usuario ya tiene la lista de canciones vacías procedemos a eliminarlo directamente.*/
                     printf("Removing user %s totalplaytime %d\n", usuario.userName, usuario.totalPlayTime);
+                    if(pos == *L){
                     deleteAtPositionU(pos,L);
+                    pos = *L;
+                    }else{
+                        pos_aux = previousU(pos, *L);
+                        deleteAtPositionU(pos,L);
+                        pos = pos_aux;
+                    }
                 }else{
                     /* Si no está vacía la lista de canciones procedemos a vaciarla.*/
                     tPosS u;
@@ -339,12 +348,21 @@ void removeU(tListU *L, tPlayTime maxTime){
                     if(isEmptyListS(usuario.songList)){
                         /* Si se ha vaciado bien eliminamos el usuario.*/
                         printf("Removing user %s totalplaytime %d\n", usuario.userName, usuario.totalPlayTime);
-                        deleteAtPositionU(pos, L);
+                        if(pos == *L){
+                            deleteAtPositionU(pos,L);
+                            pos = *L;
+                        }else{
+                            pos_aux = previousU(pos, *L);
+                            deleteAtPositionU(pos,L);
+                            pos = pos_aux;
+                        }
                     }else{
                         /* Si no damos un error.*/
                         printf("+ Error: Remove not possible\n");
                     }
                 }
+            }else{
+                pos = nextU(pos,*L);
             }
         }
     }
