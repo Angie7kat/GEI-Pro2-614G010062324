@@ -118,9 +118,8 @@ void delete(tListU *L, tUserName name) {
             /* Hacemos un bucle que desde la última canción hasta la primera va vaciando la lista de canciones.*/
             u = lastS(usuario.songList);
             while(u != NULLS){
-                aux = previousS(u,usuario.songList);
                 deleteAtPositionS(u,&usuario.songList);
-                u = aux;
+                u = lastS(usuario.songList);
             }
             updateItemU(usuario,pos, L);
             /* Actualizamos y comprobamos si se ha vaciado bien la lista de canciones.*/
