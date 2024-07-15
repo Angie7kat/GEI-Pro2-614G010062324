@@ -5,6 +5,4 @@ Errores p1: No filtrar que el findItem pueda dar false(grave), no comentar las f
 <br>
 P2: 1,95/2<br>
 <br>
-Apuntes de ayuda ( no estan 100% bien):<br>
-https://github.com/martinge17/C_ADTs <br>
-
+Archivos clase_lista clase_lista_dinámica son apuntes tomados de clase, pueden estar sin terminar o no estar bien del todo ya que están para que yo los entienda.
