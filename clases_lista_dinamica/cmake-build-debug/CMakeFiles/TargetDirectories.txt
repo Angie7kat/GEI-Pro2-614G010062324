@@ -1,3 +1,0 @@
-C:/Users/Usuario/CLionProjects/PRO2-2324/clases_lista_dinamica/cmake-build-debug/CMakeFiles/clases_lista_dinamica.dir
-C:/Users/Usuario/CLionProjects/PRO2-2324/clases_lista_dinamica/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Usuario/CLionProjects/PRO2-2324/clases_lista_dinamica/cmake-build-debug/CMakeFiles/rebuild_cache.dir
