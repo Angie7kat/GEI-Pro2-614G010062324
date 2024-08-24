@@ -1,3 +1,0 @@
-"C:\Program Files\JetBrains\CLion 2021.2.1\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\clase_listas.dir/objects.a
-C:\mingw64\bin\ar.exe cr CMakeFiles\clase_listas.dir/objects.a @CMakeFiles\clase_listas.dir\objects1.rsp
-C:\mingw64\bin\gcc.exe -g -Wl,--whole-archive CMakeFiles\clase_listas.dir/objects.a -Wl,--no-whole-archive -o clase_listas.exe -Wl,--out-implib,libclase_listas.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\clase_listas.dir\linklibs.rsp
