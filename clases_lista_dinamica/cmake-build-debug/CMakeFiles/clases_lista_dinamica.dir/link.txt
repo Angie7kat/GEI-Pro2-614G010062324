@@ -1,0 +1,3 @@
+"C:\Program Files\JetBrains\CLion 2021.2.1\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\clases_lista_dinamica.dir/objects.a
+C:\mingw64\bin\ar.exe cr CMakeFiles\clases_lista_dinamica.dir/objects.a @CMakeFiles\clases_lista_dinamica.dir\objects1.rsp
+C:\mingw64\bin\gcc.exe -g -Wl,--whole-archive CMakeFiles\clases_lista_dinamica.dir/objects.a -Wl,--no-whole-archive -o clases_lista_dinamica.exe -Wl,--out-implib,libclases_lista_dinamica.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\clases_lista_dinamica.dir\linklibs.rsp
